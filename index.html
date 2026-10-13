@@ -1,0 +1,1099 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>종이 봉지 공주 역할극</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Andika:wght@400;700&display=swap">
+<style>
+/* Layout: a puppet-theater stage (cut-paper scene, left) beside a kraft-paper script sheet (right); scene tabs above, prompter controls below. Single committed look. */
+:root{
+  --night:#1d2740;      /* theater backdrop */
+  --night-2:#28345a;
+  --kraft:#c99a62;      /* paper-bag brown, the hero material */
+  --kraft-dk:#8a6237;
+  --sheet:#f7efe1;      /* script paper */
+  --ink:#2a2118;
+  --ink-soft:#6d5c48;
+  --flame:#e8643a;
+  --gold:#f2c14e;
+  --c-P:#d9622b; --c-R:#2f6fb8; --c-F:#9a4fb0; --c-D:#2f8a4a; --c-N:#7a6a58;
+  --f-display:"Jua","Gowun Dodum",system-ui,sans-serif;
+  --f-body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-en:"Andika","Gowun Dodum",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--night);color:var(--sheet);font-family:var(--f-body);font-size:16px;margin:0}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.app{display:grid;grid-template-rows:auto 1fr auto;height:100%;padding-inline:16px;padding-block:10px;gap:10px;max-width:1600px;margin:0 auto}
+
+/* tabs */
+.top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-size:1.35rem;color:var(--kraft);letter-spacing:.02em;white-space:nowrap}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1;min-width:0}
+.tab{background:transparent;border:1.5px solid #ffffff2a;border-radius:999px;padding:6px 13px;font-family:var(--f-display);font-size:1rem;color:#e9dcc6}
+.tab small{opacity:.7;margin-left:4px;font-family:var(--f-body);font-size:.8rem}
+.tab[aria-current="true"]{background:var(--kraft);border-color:var(--kraft);color:var(--ink)}
+.tab:hover{border-color:var(--kraft)}
+.iconbtn{background:#ffffff14;border:0;border-radius:10px;padding:7px 11px;font-size:.92rem}
+.iconbtn[aria-pressed="true"]{background:var(--gold);color:var(--ink)}
+
+/* main */
+.main{min-height:0;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px}
+.stagewrap{min-width:0;min-height:0;display:flex;flex-direction:column;gap:8px}
+.stage{position:relative;background:var(--night-2);border-radius:14px;overflow:hidden;box-shadow:0 0 0 6px var(--kraft-dk),0 18px 40px #0007;aspect-ratio:800/520;max-width:100%;max-height:100%;margin:auto;width:100%}
+.stage svg,.stage img{display:block;width:100%;height:100%;object-fit:cover}
+.scenecap{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.scenecap h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.7rem;color:var(--sheet);text-wrap:balance}
+.scenecap .place{color:var(--kraft);font-size:.95rem}
+.badge{display:inline-block;font-size:.78rem;padding:2px 9px;border-radius:999px;background:var(--flame);color:#fff;margin-left:8px;vertical-align:middle;font-family:var(--f-body)}
+.imgtools{display:flex;gap:6px}
+.imgtools .iconbtn{font-size:.8rem;padding:5px 9px}
+
+.sheet{min-width:0;min-height:0;background:var(--sheet);color:var(--ink);border-radius:6px 6px 14px 14px;display:flex;flex-direction:column;box-shadow:0 18px 40px #0006;position:relative}
+.sheet::before{content:"";position:absolute;inset:0 0 auto 0;height:10px;background:radial-gradient(circle at 8px -2px,var(--night) 7px,transparent 7.5px) 0 0/22px 10px repeat-x;border-radius:6px 6px 0 0}
+.sheethead{padding:18px 18px 8px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1.5px dashed #c9b597}
+.sheethead b{font-family:var(--f-display);font-weight:400;font-size:1.15rem}
+.lines{overflow:auto;padding:10px 12px 18px;display:flex;flex-direction:column;gap:6px;scroll-behavior:smooth}
+.line{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;border:2px solid transparent;text-align:left;background:transparent;width:100%}
+.line:hover{background:#00000008}
+.line.cur{border-color:var(--ink);background:#fff;box-shadow:0 3px 0 var(--ink)}
+.line.done{opacity:.55}
+.chip{font-family:var(--f-display);font-size:1rem;color:#fff;border-radius:8px;padding:4px 0;text-align:center;line-height:1.15}
+.chip small{display:block;font-family:var(--f-en);font-size:.68rem;opacity:.9}
+.en{font-family:var(--f-en);font-size:1.45rem;line-height:1.3;color:var(--ink);min-width:0;overflow-wrap:anywhere}
+.ko{display:block;font-family:var(--f-body);font-size:.92rem;color:var(--ink-soft);margin-top:2px}
+.hide-ko .ko{display:none}
+.key .en{font-weight:700}
+.blank{display:inline-block;min-width:4.5em;border-bottom:3px solid var(--flame);color:transparent}
+.hidden-line .en{filter:blur(9px);user-select:none}
+.hidden-line .ko{filter:blur(6px)}
+.hidden-line.revealed .en,.hidden-line.revealed .ko{filter:none}
+.say{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);background:var(--sheet);display:grid;place-items:center;font-size:1rem}
+.say:hover{background:var(--gold)}
+.line.narr{grid-template-columns:76px minmax(0,1fr) auto}
+.line.narr .story{font-size:1.05rem;color:var(--ink-soft);line-height:1.55}
+.line.narr .chip{background:transparent;color:var(--c-N);border:1.5px dashed var(--c-N)}
+.hide-narr .line.narr{display:none}
+
+.endpick{display:flex;gap:8px;padding:10px 12px 0;flex-wrap:wrap}
+.endpick button{border:2px solid var(--ink);border-radius:10px;background:transparent;padding:8px 12px;text-align:left;flex:1;min-width:140px}
+.endpick button[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.endpick b{font-family:var(--f-display);font-weight:400;font-size:1.05rem;display:block}
+
+/* controls */
+.ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+.big{background:var(--kraft);color:var(--ink);border:0;border-radius:12px;padding:10px 18px;font-family:var(--f-display);font-size:1.15rem;box-shadow:0 4px 0 var(--kraft-dk)}
+.big:active{transform:translateY(3px);box-shadow:0 1px 0 var(--kraft-dk)}
+.big.alt{background:#ffffff1c;color:var(--sheet);box-shadow:0 4px 0 #0005}
+.big[aria-pressed="true"]{background:var(--gold);color:var(--ink)}
+.sep{width:1px;height:28px;background:#ffffff2a}
+.ctrl label{display:flex;align-items:center;gap:6px;font-size:.92rem;color:#e9dcc6}
+.ctrl select{font:inherit;background:#ffffff14;color:var(--sheet);border:1px solid #ffffff33;border-radius:8px;padding:6px 8px}
+.ctrl select option{color:#000}
+
+/* full pages (cover, story, roles, tools) */
+.page{grid-column:1/-1;min-height:0;overflow:auto;padding-block:6px}
+.cover{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;height:100%}
+.cover h1{font-family:var(--f-display);font-weight:400;font-size:clamp(2.2rem,5vw,4.2rem);line-height:1.1;margin:0 0 12px;color:var(--sheet);text-wrap:balance}
+.cover h1 em{font-style:normal;color:var(--kraft)}
+.eyebrow{font-size:.9rem;letter-spacing:.12em;color:var(--kraft);margin-bottom:10px}
+.cover p{font-size:1.15rem;line-height:1.7;color:#e9dcc6;max-width:34em}
+.goal{margin-top:18px;background:#ffffff10;border-radius:12px;padding:14px 18px;display:grid;gap:6px}
+.goal span{font-family:var(--f-en);font-size:1.25rem;color:var(--gold)}
+.cardgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.rcard{background:var(--sheet);color:var(--ink);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.rcard svg{width:100%;height:auto;background:#efe2c8;border-radius:10px}
+.rcard h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.5rem}
+.rcard h3 small{font-family:var(--f-en);font-size:1rem;color:var(--ink-soft);margin-left:6px}
+.rcard p{margin:0;line-height:1.55;font-size:.98rem}
+.rcard .count{font-size:.85rem;color:var(--ink-soft)}
+.rcard .tip{font-family:var(--f-en);font-size:1.05rem;border-top:1.5px dashed #c9b597;padding-top:8px}
+.ptitle{font-family:var(--f-display);font-weight:400;font-size:2rem;margin:4px 0 14px}
+.storycols{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px}
+.storybox{background:var(--sheet);color:var(--ink);border-radius:14px;padding:22px 26px;line-height:1.85;font-size:1.12rem}
+.storybox p{margin:0 0 12px}
+.storybox .src{font-size:.9rem;color:var(--ink-soft)}
+.cmp{display:grid;gap:10px}
+.qcard{background:#ffffff10;border-radius:12px;padding:14px 16px}
+.qcard b{font-family:var(--f-display);font-weight:400;font-size:1.2rem;color:var(--gold)}
+.qcard .ans{margin-top:8px;line-height:1.6;color:#efe3cf}
+.qcard button{margin-top:8px}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tool{background:var(--sheet);color:var(--ink);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.tool h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:1.45rem}
+.timer{font-family:var(--f-en);font-weight:700;font-size:clamp(3rem,7vw,5.5rem);text-align:center;font-variant-numeric:tabular-nums;line-height:1}
+.timer.over{color:var(--flame)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.pill{border:2px solid var(--ink);border-radius:999px;padding:6px 14px;background:transparent}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--sheet)}
+.dark{background:var(--ink);color:var(--sheet);border:0;border-radius:10px;padding:9px 16px;font-family:var(--f-display);font-size:1.05rem}
+.order{list-style:none;padding:0;margin:0;display:grid;gap:6px;counter-reset:o}
+.order li{counter-increment:o;display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-size:1.3rem;padding:6px 10px;background:#00000008;border-radius:10px}
+.order li::before{content:counter(o) "번째";font-size:.85rem;color:var(--ink-soft);width:3.6em}
+.stars{display:grid;gap:8px}
+.stars div{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:1.05rem}
+.stars span{color:var(--flame);font-size:1.4rem;letter-spacing:.1em}
+.thornopts{display:grid;gap:8px;padding:12px}
+.topt{border:2px solid var(--ink);border-radius:12px;background:#fff;padding:10px 12px;text-align:left;display:grid;gap:4px}
+.topt[aria-pressed="true"]{background:var(--gold)}
+.topt b{font-family:var(--f-display);font-weight:400;font-size:1.1rem}
+.topt .en{font-size:1.15rem}
+
+/* svg animation */
+.bob{animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.shake{animation:shake .5s linear 2}
+@keyframes shake{25%{transform:translate(-6px,3px)}50%{transform:translate(5px,-3px)}75%{transform:translate(-3px,2px)}}
+.pop{transform-box:fill-box;transform-origin:center;animation:pop .7s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes pop{from{transform:scale(0) rotate(-20deg);opacity:0}to{transform:none;opacity:1}}
+.flame{animation:flame 1.4s ease-out both;transform-box:fill-box;transform-origin:right center}
+@keyframes flame{0%{transform:scaleX(0);opacity:0}20%{opacity:1}70%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1.05);opacity:0}}
+.flyoff{animation:flyoff 2.2s ease-in both}
+@keyframes flyoff{to{transform:translate(520px,-320px) scale(.5)}}
+.zoom{animation:zoom 2.4s ease-in-out both}
+@keyframes zoom{0%{transform:none}40%{transform:translate(-900px,-120px)}41%{transform:translate(900px,-120px)}100%{transform:none}}
+.fade{animation:fade 1.6s ease both}
+@keyframes fade{to{opacity:0}}
+.grow{animation:grow 1.2s ease-out both;transform-box:fill-box;transform-origin:left center}
+@keyframes grow{from{transform:scaleX(0)}}
+.zz text{animation:zz 2s ease-in-out infinite}
+@keyframes zz{0%{opacity:0;transform:translate(0,10px)}50%{opacity:1}100%{opacity:0;transform:translate(14px,-16px)}}
+.dance{animation:dance .9s ease-in-out infinite alternate}
+@keyframes dance{from{transform:translateY(0) rotate(-6deg)}to{transform:translateY(-16px) rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+
+@media (max-width:1000px){
+  .main{grid-template-columns:minmax(0,1fr)}
+  .app{height:auto;min-height:100%}
+  .lines{max-height:none}
+  .cover,.storycols{grid-template-columns:minmax(0,1fr)}
+  .cardgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tools{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .cardgrid{grid-template-columns:minmax(0,1fr)}
+  .line{grid-template-columns:58px minmax(0,1fr) auto}
+  .en{font-size:1.2rem}
+  .brand{display:none}
+}
+[hidden]{display:none!important}
+.stage{aspect-ratio:16/9}
+.stage>img,#scimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:filter .9s ease}
+.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+#scimg.mystery{filter:blur(16px) brightness(.75) saturate(.8)}
+.mtext{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-display);font-size:clamp(1.4rem,3vw,2.4rem);color:#fff;text-shadow:0 3px 12px #000a;text-align:center;padding:0 16px}
+.fadein{animation:fadein .6s ease both}
+@keyframes fadein{from{opacity:.25}to{opacity:1}}
+#itempop{position:absolute;right:4%;top:6%;width:24%;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 0 0 6px var(--gold),0 10px 30px #0008;background:#fff;z-index:2}
+#itempop img{width:100%;height:100%;object-fit:cover}
+.popin{animation:pop .7s cubic-bezier(.3,1.6,.5,1) both}
+#vidlayer{position:absolute;inset:0;z-index:3;background:#000}
+.vclose{position:absolute;right:10px;top:10px;z-index:4;background:#000a;color:#fff;border:1px solid #fff6;border-radius:999px;padding:6px 12px;font-family:var(--f-display);cursor:pointer}
+.acts2{display:flex;gap:6px;align-items:center}
+.vidbtn{width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-size:1.05rem;background:#fff}
+.vidbtn:hover{background:var(--gold)}
+.rcard img.portrait{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;background:#efe2c8}
+@media (max-width:1750px){.brand{display:none}}
+</style>
+</head>
+<body>
+
+
+<div class="app" id="app">
+  <header class="top">
+    <div class="brand">종이 봉지 공주의 왕자 구출 대작전</div>
+    <nav class="tabs" id="tabs" aria-label="장면"></nav>
+    <button class="iconbtn" id="bgmBtn" aria-pressed="true" title="배경음악 켜기/끄기">배경음악</button>
+    <button class="iconbtn" id="sfxBtn" aria-pressed="true" title="효과음 켜기/끄기">효과음</button>
+    <button class="iconbtn" id="fsBtn" title="전체 화면">전체 화면</button>
+  </header>
+  <main class="main" id="main"></main>
+  <footer class="ctrl" id="ctrl"></footer>
+</div>
+<input type="file" id="imgInput" accept="image/*" hidden>
+
+<script>
+const DATA = {"roles":{"P":{"ko":"공주","en":"Princess"},"R":{"ko":"왕자","en":"Prince"},"F":{"ko":"요정","en":"Fairy"},"D":{"ko":"용","en":"Dragon"}},"scenes":[{"id":1,"title":"용이 나타났다!","place":"성 정원","bg":"garden","item":null,"lines":[{"r":"N","t":"공주와 왕자, 그리고 요정은 성 정원에서 즐겁게 놀고 있었어요. 그런데 갑자기 하늘이 어두워지더니…"},{"r":"D","t":"Roar!","k":"(으르렁!)","fx":"roar"},{"r":"P","t":"Look!","k":"저기 봐!"},{"r":"R","t":"It's big!","k":"엄청 커!"},{"r":"F","t":"Oh, no!","k":"안 돼!"},{"r":"N","t":"용은 불을 뿜어 성을 몽땅 태우고, 왕자를 붙잡아 날아가 버렸어요. 공주의 예쁜 옷도 다 타 버렸지요."},{"r":"R","t":"Help me!","k":"살려 줘!","fx":"grab"}]},{"id":2,"title":"종이 봉지 옷","place":"불탄 성터","bg":"ruins","item":"scissors","lines":[{"r":"N","t":"타고 남은 성터에서 공주가 찾은 건 커다란 종이 봉지 하나뿐이었어요. 공주는 종이 봉지로 옷을 만들기로 했어요."},{"r":"P","t":"Do you have scissors?","k":"너 가위 있니?","key":true},{"r":"F","t":"Yes, I do. Here.","k":"응, 있어. 여기 있어.","key":true,"fx":"item"},{"r":"P","t":"Thank you.","k":"고마워."},{"r":"F","t":"You're welcome.","k":"천만에."},{"r":"N","t":"싹둑싹둑! 공주는 종이 봉지 옷을 입고 왕자를 구하러 길을 떠났어요.","fx":"dress"},{"r":"P","t":"Let's go!","k":"가자!"}]},{"id":3,"title":"끊어진 다리","place":"불탄 숲 속 강가","bg":"river","item":"glue","lines":[{"r":"N","t":"용이 지나간 숲은 온통 까맣게 타 있었어요. 강 위의 다리도 뚝 끊어져 있었지요."},{"r":"P","t":"Oh, no! Do you have a glue stick?","k":"이런! 너 풀 있니?","key":true},{"r":"F","t":"Yes, I do. I have a glue stick. Here.","k":"응, 있어. 나는 풀이 있어. 여기 있어.","key":true,"fx":"item"},{"r":"P","t":"Thank you!","k":"고마워!"},{"r":"N","t":"공주는 풀로 덩굴을 이어 붙여 다리를 만들고, 씩씩하게 강을 건넜어요.","fx":"fix"}]},{"id":4,"title":"용을 꾀어라!","place":"용의 동굴 앞","bg":"cave","item":null,"original":true,"lines":[{"r":"N","t":"마침내 용의 동굴! 공주는 커다란 문고리로 문을 쾅쾅 두드렸어요."},{"r":"P","t":"Knock, knock!","k":"똑똑!"},{"r":"D","t":"Go away!","k":"저리 가!"},{"r":"N","t":"공주는 꾀를 냈어요. 힘센 용을 마구 칭찬해 주기로요."},{"r":"P","t":"You are strong! Fire!","k":"넌 정말 힘이 세! 불 뿜어 봐!"},{"r":"D","t":"Whoosh!","k":"(화르르!)","fx":"fire"},{"r":"P","t":"Wow! Again!","k":"우아! 한 번 더!"},{"r":"D","t":"Whoosh! … Oh, no fire.","k":"(화르르!) … 어, 불이 안 나와.","fx":"fire"},{"r":"P","t":"Fly!","k":"날아 봐!"},{"r":"D","t":"Okay! Fly!","k":"좋아! 날아라!","fx":"fly"},{"r":"N","t":"용은 눈 깜짝할 사이에 세상을 한 바퀴 돌고 왔어요."},{"r":"P","t":"Wow! Again!","k":"우아! 한 번 더!"},{"r":"D","t":"I'm tired. Zzz…","k":"나 지쳤어. 쿨쿨…","fx":"sleep"},{"r":"N","t":"용은 너무 지쳐서 그만 쿨쿨 잠들어 버렸어요."}]},{"id":5,"title":"감옥을 열어라!","place":"동굴 속 감옥","bg":"prison","item":"eraser","lines":[{"r":"N","t":"공주는 잠든 용을 살금살금 넘어 동굴 안으로 들어갔어요. 그때 감옥 안에서 왕자의 목소리가 들렸어요."},{"r":"R","t":"Open the door!","k":"문 좀 열어 줘!"},{"r":"N","t":"공주는 연필로 문고리를 그려 문을 여는 상상을 했어요."},{"r":"P","t":"Do you have a pencil?","k":"너 연필 있니?","key":true},{"r":"F","t":"No, I don't.","k":"아니, 없어.","key":true},{"r":"P","t":"Hmm… Do you have an eraser?","k":"음… 너 지우개 있니?","key":true},{"r":"F","t":"Yes, I do. I have an eraser.","k":"응, 있어. 나는 지우개가 있어.","key":true,"fx":"item"},{"r":"N","t":"쓱싹쓱싹! 공주는 지우개로 감옥 창살을 지웠어요. 왕자가 그 사이로 빠져나왔지요.","fx":"erase"}]},{"id":6,"title":"그 다음은?","place":"동굴 밖","bg":"sunrise","item":null,"ending":true,"endings":{"A":{"name":"교과서 결말","desc":"모두 함께 기뻐해요.","lines":[{"r":"R","t":"Thank you!","k":"고마워!"},{"r":"P","t":"You're welcome!","k":"천만에!"},{"r":"F","t":"Yay!","k":"야호!"},{"r":"D","t":"Zzz…","k":"(쿨쿨…)"},{"r":"N","t":"공주와 왕자, 요정은 무사히 집으로 돌아갔어요."}]},"B":{"name":"원작 결말","desc":"『종이 봉지 공주』의 깜짝 결말이에요.","lines":[{"r":"N","t":"그런데 왕자는 고맙다는 말 대신 공주의 옷만 쳐다봤어요."},{"r":"R","t":"Oh, no! A paper bag? You are messy!","k":"으악! 종이 봉지? 너 엉망이야!"},{"r":"P","t":"Hmm… You are not nice.","k":"흠… 넌 친절하지 않구나."},{"r":"P","t":"Bye-bye, Prince!","k":"잘 있어, 왕자!"},{"r":"N","t":"공주는 왕자를 두고, 햇살 속으로 신나게 춤추며 혼자 떠났답니다."}]}}}],"thorn":{"title":"새 장면: 가시덤불","place":"가시덤불 숲","intro":"끊어진 다리 대신, 길을 꽉 막은 가시덤불이 나타났어요! 공주는 어떤 학용품으로 빠져나갈까요?","options":[{"item":"scissors","ko":"가위로 가시덤불을 싹둑 잘라요.","q":"Do you have scissors?","a":"Yes, I do. I have scissors. Here."},{"item":"pencil","ko":"연필로 가시덤불에 큰 길을 그려요.","q":"Do you have a pencil?","a":"Yes, I do. I have a pencil. Here."},{"item":"eraser","ko":"지우개로 가시덤불을 쓱싹 지워요.","q":"Do you have an eraser?","a":"Yes, I do. I have an eraser. Here."}]}}
+;
+const ROLE = DATA.roles;
+const RC = {P:'var(--c-P)',R:'var(--c-R)',F:'var(--c-F)',D:'var(--c-D)'};
+const ITEMWORDS = ['scissors','a glue stick','glue stick','a pencil','pencil','an eraser','eraser'];
+
+/* ---------- state ---------- */
+const S = {
+  page:'cover', line:0, ending:'B', thorn:0,
+  showKo:true, showNarr:true, hideRole:'', blanks:false, repeat:false, narrTTS:false, rate:0.85,
+  sfx:true, playing:false, fired:{}, revealed:{}
+};
+try{ const s=JSON.parse(localStorage.getItem('pb-prefs')||'{}'); Object.assign(S,{ending:s.ending||S.ending,showKo:s.showKo??true,rate:s.rate||S.rate,sfx:s.sfx??true}); }catch(e){}
+function savePrefs(){ try{localStorage.setItem('pb-prefs',JSON.stringify({ending:S.ending,showKo:S.showKo,rate:S.rate,sfx:S.sfx}))}catch(e){} }
+
+const PAGES = [
+  {id:'cover',label:'시작'},
+  {id:'story',label:'원작 이야기'},
+  {id:'roles',label:'역할 정하기'},
+  ...DATA.scenes.map(s=>({id:'s'+s.id,label:String(s.id),sub:s.title})),
+  {id:'thorn',label:'새 장면',sub:'가시덤불'},
+  {id:'tools',label:'연습·발표'}
+];
+
+function sceneLines(sc){
+  if(sc.ending) return DATA.scenes[5].endings[S.ending].lines;
+  return sc.lines;
+}
+function curScene(){ const m=S.page.match(/^s(\d)$/); return m?DATA.scenes[+m[1]-1]:null; }
+
+/* ---------- svg art (cut paper) ---------- */
+const SK='#f4c9a0';
+const defs=`<defs>
+<filter id="paper" x="-10%" y="-10%" width="120%" height="120%"><feDropShadow dx="3" dy="4" stdDeviation="2" flood-color="#000" flood-opacity=".28"/></filter>
+<filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .09 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+</defs>`;
+function grainRect(){return `<rect width="800" height="520" filter="url(#grain)" fill="#fff"/>`}
+
+function princess(x,y,s=1,dress='gown',extra=''){
+  const d = dress==='bag'
+   ? `<path d="M-30 0 L-26 -6 L-20 0 L-14 -7 L-8 0 L-2 -6 L4 0 L10 -7 L16 0 L22 -6 L30 0 L32 78 L-32 78 Z" fill="#c99a62"/>
+      <path d="M-14 6 L-14 76 M14 6 L14 76" stroke="#8a6237" stroke-width="2" fill="none"/>
+      <path d="M-32 30 L32 30" stroke="#b08450" stroke-width="2"/>`
+   : dress==='torn'
+   ? `<path d="M-22 0 L22 0 L36 70 L28 64 L20 76 L10 66 L0 78 L-10 66 L-20 76 L-28 64 L-36 70 Z" fill="#e9a3b4"/><path d="M-6 30 l6 10 l6 -8" stroke="#7a5a50" stroke-width="2" fill="none"/>`
+   : `<path d="M-20 0 L20 0 L40 78 L-40 78 Z" fill="#ef93ad"/><path d="M-40 78 L40 78 L36 70 L-36 70Z" fill="#fff" opacity=".6"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})" filter="url(#paper)" ${extra}>
+    <rect x="-14" y="70" width="9" height="34" fill="${SK}"/><rect x="5" y="70" width="9" height="34" fill="${SK}"/>
+    <rect x="-36" y="8" width="10" height="40" rx="5" fill="${SK}" transform="rotate(14 -31 8)"/>
+    <rect x="26" y="8" width="10" height="40" rx="5" fill="${SK}" transform="rotate(-14 31 8)"/>
+    ${d}
+    <path d="M-30 -36 L-38 -52 L-26 -50 L-30 -66 L-16 -58 L-12 -74 L0 -62 L10 -76 L16 -58 L30 -66 L28 -50 L40 -52 L32 -34 Z" fill="#e3833a"/>
+    <circle cx="0" cy="-30" r="26" fill="${SK}"/>
+    <path d="M-26 -36 Q0 -62 26 -36 Q14 -48 0 -44 Q-14 -50 -26 -36Z" fill="#e3833a"/>
+    ${dress==='gown'?`<path d="M-14 -58 L-10 -76 L-2 -64 L4 -78 L10 -64 L16 -76 L18 -58Z" fill="#f2c14e"/>`:''}
+    <circle cx="-9" cy="-30" r="3" fill="#2a2118"/><circle cx="9" cy="-30" r="3" fill="#2a2118"/>
+    <path d="M-8 -18 Q0 -12 8 -18" stroke="#2a2118" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <circle cx="-16" cy="-21" r="4" fill="#ef8f8f" opacity=".6"/><circle cx="16" cy="-21" r="4" fill="#ef8f8f" opacity=".6"/>
+  </g>`;
+}
+function prince(x,y,s=1,mood='happy',extra=''){
+  const mouth = mood==='scared'?`<ellipse cx="0" cy="-16" rx="6" ry="7" fill="#2a2118"/>`
+    : mood==='grumpy'?`<path d="M-8 -14 Q0 -20 8 -14" stroke="#2a2118" stroke-width="2.5" fill="none" stroke-linecap="round"/>`
+    : `<path d="M-8 -18 Q0 -11 8 -18" stroke="#2a2118" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})" filter="url(#paper)" ${extra}>
+    <rect x="-15" y="56" width="11" height="48" fill="#4c9a64"/><rect x="4" y="56" width="11" height="48" fill="#4c9a64"/>
+    <path d="M-20 104 L-2 104 L-4 96 L-16 96Z M20 104 L2 104 L4 96 L16 96Z" fill="#c93b3b"/>
+    <rect x="-24" y="0" width="48" height="60" rx="8" fill="#3d78c2"/>
+    <rect x="-24" y="40" width="48" height="8" fill="#f2c14e"/>
+    <rect x="-34" y="4" width="10" height="38" rx="5" fill="#3d78c2"/><rect x="24" y="4" width="10" height="38" rx="5" fill="#3d78c2"/>
+    <circle cx="0" cy="-28" r="25" fill="${SK}"/>
+    <path d="M-27 -30 Q-24 -58 0 -56 Q26 -58 27 -30 Q18 -44 0 -42 Q-18 -46 -27 -30Z" fill="#f0cf5a"/>
+    <path d="M-20 -50 L-16 -76 L-6 -62 L0 -80 L6 -62 L16 -76 L20 -50Z" fill="#f2c14e" stroke="#c9952a" stroke-width="2"/>
+    <circle cx="-9" cy="-28" r="3" fill="#2a2118"/><circle cx="9" cy="-28" r="3" fill="#2a2118"/>
+    ${mood==='grumpy'?`<path d="M-15 -37 L-4 -34 M15 -37 L4 -34" stroke="#2a2118" stroke-width="2.5"/>`:''}
+    ${mouth}
+  </g>`;
+}
+function fairy(x,y,s=1,extra=''){
+  return `<g transform="translate(${x} ${y}) scale(${s})"><g class="bob" ${extra}><g filter="url(#paper)">
+    <ellipse cx="-24" cy="0" rx="22" ry="30" fill="#bfe6f2" opacity=".85" transform="rotate(-25 -24 0)"/>
+    <ellipse cx="24" cy="0" rx="22" ry="30" fill="#bfe6f2" opacity=".85" transform="rotate(25 24 0)"/>
+    <path d="M-14 0 L14 0 L22 46 L-22 46Z" fill="#b46ac8"/>
+    <rect x="-10" y="44" width="7" height="20" fill="${SK}"/><rect x="3" y="44" width="7" height="20" fill="${SK}"/>
+    <line x1="16" y1="10" x2="44" y2="-22" stroke="#7a5a3a" stroke-width="3"/>
+    <path d="M44 -36 L48 -26 L58 -24 L50 -18 L52 -8 L44 -14 L36 -8 L38 -18 L30 -24 L40 -26Z" fill="#f2c14e"/>
+    <circle cx="0" cy="-18" r="18" fill="${SK}"/>
+    <path d="M-19 -18 Q-18 -40 0 -40 Q18 -40 19 -18 Q10 -30 0 -28 Q-10 -30 -19 -18Z" fill="#7d4a2c"/>
+    <circle cx="-6" cy="-18" r="2.4" fill="#2a2118"/><circle cx="6" cy="-18" r="2.4" fill="#2a2118"/>
+    <path d="M-5 -10 Q0 -6 5 -10" stroke="#2a2118" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g></g></g>`;
+}
+function dragon(x,y,s=1,state='awake',extra=''){
+  const eye = state==='sleep'
+    ? `<path d="M-108 -96 q8 6 16 0" stroke="#1c3a22" stroke-width="4" fill="none" stroke-linecap="round"/>`
+    : `<circle cx="-100" cy="-98" r="10" fill="#fff"/><circle cx="-103" cy="-97" r="5" fill="#1c3a22"/>`;
+  const mouth = state==='fire' ? `<path d="M-168 -78 L-128 -70 L-168 -60Z" fill="#7a1f1f"/>` : `<path d="M-166 -72 L-126 -70" stroke="#1c3a22" stroke-width="3"/>`;
+  return `<g transform="translate(${x} ${y}) scale(${s})" ${extra}><g filter="url(#paper)">
+    <path d="M60 10 Q150 0 180 -60 Q160 10 70 40Z" fill="#3f8f50"/>
+    <path d="M-10 -40 L20 -120 L50 -70 L90 -140 L100 -50Z" fill="#7cc184"/>
+    <ellipse cx="20" cy="10" rx="90" ry="60" fill="#4fa463"/>
+    <ellipse cx="10" cy="30" rx="60" ry="32" fill="#cfe6a8"/>
+    <path d="M-50 -10 Q-80 -60 -90 -90 L-60 -100 Q-40 -50 -20 -20Z" fill="#4fa463"/>
+    <path d="M-170 -100 Q-150 -122 -90 -118 Q-70 -110 -72 -86 Q-80 -60 -120 -64 L-170 -66 Q-180 -82 -170 -100Z" fill="#4fa463"/>
+    <path d="M-100 -118 L-96 -138 L-86 -120Z M-84 -114 L-76 -132 L-72 -110Z" fill="#d94a3a"/>
+    <path d="M-60 -96 l12 -10 l4 14 l12 -8 l2 14 l14 -6 l-2 16 l14 -2 l-6 14 l14 2 l-10 12 l14 6 l-14 8" fill="#d94a3a"/>
+    <circle cx="-160" cy="-90" r="3" fill="#1c3a22"/>
+    ${eye}${mouth}
+    <path d="M-30 60 l0 18 l-12 0 M-30 78 l8 0 M50 60 l0 18 l12 0 M50 78 l-8 0" stroke="#3f8f50" stroke-width="12" stroke-linecap="round" fill="none"/>
+  </g>
+  ${state==='fire'?`<g class="flame"><path d="M-172 -70 C-260 -120 -330 -60 -420 -90 C-360 -40 -300 -40 -250 -20 C-310 -10 -360 20 -420 10 C-320 40 -240 -20 -172 -64Z" fill="#f2c14e"/><path d="M-172 -70 C-230 -90 -270 -60 -320 -66 C-280 -40 -230 -40 -172 -64Z" fill="#e8643a"/></g>`:''}
+  ${state==='sleep'?`<g class="zz" font-family="Jua,sans-serif" fill="#fff" font-size="34"><text x="-150" y="-140">Z</text><text x="-120" y="-170" style="animation-delay:.6s">z</text><text x="-96" y="-196" style="animation-delay:1.2s">z</text></g>`:''}
+  </g>`;
+}
+const ITEMS={
+  scissors:`<g><circle cx="-26" cy="34" r="18" fill="none" stroke="#e8643a" stroke-width="10"/><circle cx="26" cy="34" r="18" fill="none" stroke="#e8643a" stroke-width="10"/><path d="M-14 22 L30 -60 L36 -56 L4 18Z M14 22 L-30 -60 L-36 -56 L-4 18Z" fill="#d7dde6" stroke="#6b7480" stroke-width="2"/><circle r="5" cy="4" fill="#6b7480"/></g>`,
+  glue:`<g><rect x="-22" y="-20" width="44" height="76" rx="6" fill="#3d78c2"/><rect x="-22" y="0" width="44" height="26" fill="#f7efe1"/><text y="19" text-anchor="middle" font-family="Andika,sans-serif" font-size="13" fill="#2a2118">GLUE</text><rect x="-18" y="-44" width="36" height="26" rx="4" fill="#f2c14e"/><rect x="-14" y="-62" width="28" height="20" rx="8" fill="#fff8d8"/></g>`,
+  pencil:`<g transform="rotate(-35)"><rect x="-70" y="-12" width="110" height="24" fill="#f2c14e"/><rect x="-82" y="-12" width="14" height="24" fill="#ef93ad"/><rect x="-70" y="-12" width="6" height="24" fill="#b8bec6"/><path d="M40 -12 L72 0 L40 12Z" fill="#f4d3a6"/><path d="M62 -4 L72 0 L62 4Z" fill="#2a2118"/></g>`,
+  eraser:`<g transform="rotate(-12)"><rect x="-50" y="-26" width="100" height="52" rx="8" fill="#f7efe1" stroke="#c9b597" stroke-width="3"/><rect x="-50" y="-26" width="44" height="52" rx="8" fill="#5bb0c9"/><rect x="-14" y="-26" width="8" height="52" fill="#5bb0c9"/></g>`
+};
+function itemPop(name,x=400,y=200){return `<g transform="translate(${x} ${y})"><g class="pop"><circle r="86" fill="#fff8d8" opacity=".9"/>${[0,1,2,3,4,5,6,7].map(i=>`<path d="M0 -112 L6 -96 L0 -88 L-6 -96Z" fill="#f2c14e" transform="rotate(${i*45})"/>`).join('')}<g transform="scale(1.1)">${ITEMS[name]}</g></g></g>`}
+function castle(x,y,c='#b9b2c6',burnt=false){
+  const crn=w=>Array.from({length:w/20},(_,i)=>`<rect x="${i*20}" y="-14" width="12" height="14" fill="${c}"/>`).join('');
+  return `<g transform="translate(${x} ${y})" filter="url(#paper)">
+    <rect x="0" y="0" width="240" height="${burnt?70:150}" fill="${c}"/>
+    ${burnt?'':`<g>${crn(240)}</g>`}
+    <rect x="-40" y="${burnt?20:-60}" width="70" height="${burnt?50:210}" fill="${c}"/>
+    <rect x="210" y="${burnt?30:-60}" width="70" height="${burnt?40:210}" fill="${c}"/>
+    ${burnt?`<path d="M-40 20 l14 -18 l10 12 l12 -20 l14 16 l20 -10 L30 20Z M210 30 l18 -24 l14 14 l20 -18 l18 28Z" fill="${c}"/>`
+     :`<path d="M-48 -60 L-5 -120 L38 -60Z M202 -60 L245 -120 L288 -60Z" fill="#c95a5a"/><path d="M90 150 L90 80 Q120 50 150 80 L150 150Z" fill="#6b4a32"/><rect x="-20" y="-20" width="26" height="36" rx="13" fill="#6a6380"/><rect x="232" y="-20" width="26" height="36" rx="13" fill="#6a6380"/>`}
+  </g>`;
+}
+function tree(x,y,s=1,burnt=false){
+  return burnt?`<g transform="translate(${x} ${y}) scale(${s})" filter="url(#paper)"><path d="M-8 0 L-6 -110 L-26 -150 L-4 -122 L0 -170 L6 -120 L24 -146 L8 -104 L8 0Z" fill="#2c2420"/></g>`
+  :`<g transform="translate(${x} ${y}) scale(${s})" filter="url(#paper)"><rect x="-8" y="-60" width="16" height="60" fill="#7a5235"/><circle cx="0" cy="-90" r="44" fill="#5fae6a"/><circle cx="-26" cy="-70" r="28" fill="#4fa05c"/><circle cx="26" cy="-72" r="30" fill="#6dbb73"/></g>`;
+}
+function smoke(x,y,s=1){return `<g transform="translate(${x} ${y}) scale(${s})" opacity=".75"><circle r="30" fill="#8c8590"/><circle cx="34" cy="-14" r="38" fill="#9d96a0"/><circle cx="72" cy="4" r="28" fill="#8c8590"/></g>`}
+function bush(x,y,s=1){
+  let p='';for(let i=0;i<14;i++){const a=i/14*Math.PI;p+=`<path d="M${Math.cos(a)*-120} ${-Math.sin(a)*90} l${10*Math.cos(a+1.6)} ${-10*Math.sin(a+1.6)} l${-Math.cos(a)*-26} ${Math.sin(a)*-26}Z" fill="#1f3a26"/>`}
+  return `<g transform="translate(${x} ${y}) scale(${s})" filter="url(#paper)"><ellipse cx="0" cy="0" rx="130" ry="96" fill="#2f5a36"/><ellipse cx="-40" cy="-20" rx="70" ry="60" fill="#3c6d42"/><ellipse cx="50" cy="-10" rx="70" ry="64" fill="#2a5030"/>${p}<path d="M-90 -10 l-16 -8 M-50 -60 l-10 -16 M20 -70 l4 -18 M70 -40 l16 -10 M100 0 l18 0 M-30 20 l-12 12 M40 30 l10 14" stroke="#c9d6a0" stroke-width="5" stroke-linecap="round"/></g>`;
+}
+
+/* scene renderers: (lineIndex, fired) -> svg */
+function past(lines,i,fx){ const k=lines.findIndex(l=>l.fx===fx); return k>-1 && i>=k; }
+function lastFx(lines,i){ return lines[i] && lines[i].fx; }
+function svgWrap(inner){return `<svg viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" role="img">${defs}${inner}${grainRect()}</svg>`}
+
+const RENDER = {
+  garden(L,i){
+    const roar=past(L,i,'roar'), grab=past(L,i,'grab'), burnt=i>=5;
+    const now=lastFx(L,i);
+    return svgWrap(`
+      <rect width="800" height="520" fill="${burnt?'#e8a070':'#a9d8ec'}"/>
+      ${burnt?'':`<circle cx="690" cy="80" r="44" fill="#f7e08a"/>`}
+      <path d="M0 360 Q200 300 420 350 T800 330 L800 520 L0 520Z" fill="${burnt?'#8a7a52':'#8cc56b'}"/>
+      ${castle(440,200,burnt?'#7d7684':'#c9c1d6',burnt)}
+      ${burnt?smoke(470,150,1)+smoke(600,120,.8):''}
+      ${tree(120,380,1,burnt)}
+      ${burnt?'':[60,200,330,380].map(x=>`<g transform="translate(${x} 470)"><circle r="8" fill="#ef93ad"/><circle r="3" fill="#f2c14e"/></g>`).join('')}
+      <g class="${now==='roar'?'shake':''}">
+      ${princess(250,330,1,burnt?'torn':'gown')}
+      ${grab?'':prince(360,326,1,roar?'scared':'happy')}
+      ${fairy(170,260,.9)}
+      </g>
+      ${roar?`<g class="${now==='grab'?'flyoff':grab?'':'pop'}" style="${grab&&now!=='grab'?'display:none':''}">${dragon(640,180,.95,'awake')}${now==='grab'?prince(560,150,.7,'scared'):''}</g>`:''}
+    `);
+  },
+  ruins(L,i){
+    const item=past(L,i,'item'), dress=past(L,i,'dress'); const now=lastFx(L,i);
+    return svgWrap(`
+      <rect width="800" height="520" fill="#d9926a"/>
+      <rect y="0" width="800" height="200" fill="#e7a97c" opacity=".6"/>
+      ${smoke(80,90,.9)}${smoke(560,70,1.1)}
+      <path d="M0 380 L800 360 L800 520 L0 520Z" fill="#6e5c48"/>
+      ${castle(470,300,'#6b6470',true)}
+      ${tree(90,400,.9,true)}${tree(720,390,.8,true)}
+      ${dress?'':`<g transform="translate(150 420) rotate(-8)" filter="url(#paper)"><path d="M-40 -70 L40 -70 L46 30 L-46 30Z" fill="#c99a62"/><path d="M-40 -70 l10 -10 l10 10 l10 -10 l10 10 l10 -10 l10 10 l10 -10 l10 10" fill="#c99a62"/><path d="M-20 -60 L-20 26 M20 -60 L20 26" stroke="#8a6237" stroke-width="2"/></g>`}
+      ${princess(330,330,1.05,dress?'bag':'torn')}
+      ${fairy(480,250,.95)}
+      ${now==='item'?itemPop('scissors',620,170):''}
+      ${now==='dress'?`<g transform="translate(330 330)"><g class="pop">${[0,1,2,3,4,5].map(k=>`<path d="M0 -120 L5 -105 L0 -98 L-5 -105Z" fill="#fff8d8" transform="rotate(${k*60})"/>`).join('')}</g></g>`:''}
+    `);
+  },
+  river(L,i){
+    const item=past(L,i,'item'), fix=past(L,i,'fix'); const now=lastFx(L,i);
+    return svgWrap(`
+      <rect width="800" height="520" fill="#cfa98a"/>
+      ${smoke(640,60,.8)}
+      ${[60,150,250,560,660,740].map((x,k)=>tree(x,330-(k%2)*10,.85+(k%3)*.1,true)).join('')}
+      <path d="M0 330 L800 330 L800 520 L0 520Z" fill="#6a5a48"/>
+      <path d="M0 380 Q400 360 800 390 L800 470 Q400 450 0 470Z" fill="#4c8fbf" filter="url(#paper)"/>
+      <path d="M60 410 q30 -8 60 0 M300 420 q30 -8 60 0 M560 425 q30 -8 60 0" stroke="#bfe6f2" stroke-width="4" fill="none"/>
+      <g filter="url(#paper)"><rect x="140" y="368" width="210" height="16" fill="#8a6237" transform="rotate(6 140 368)"/><rect x="460" y="372" width="200" height="16" fill="#8a6237" transform="rotate(-8 660 372)"/>
+      <rect x="150" y="360" width="8" height="40" fill="#5a3e24"/><rect x="640" y="360" width="8" height="40" fill="#5a3e24"/></g>
+      ${fix?`<g class="${now==='fix'?'grow':''}"><path d="M330 384 Q400 410 470 384" stroke="#3f8f50" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#paper)"/><path d="M345 392 l-6 10 M380 402 l4 12 M420 402 l-4 12 M455 392 l6 10" stroke="#5fae6a" stroke-width="6" stroke-linecap="round"/></g>`:''}
+      ${princess(fix?600:220,250,.95,'bag')}
+      ${fairy(fix?700:110,190,.85)}
+      ${now==='item'?itemPop('glue',420,180):''}
+    `);
+  },
+  cave(L,i){
+    const now=lastFx(L,i);
+    const sleep=past(L,i,'sleep');
+    const firing = now==='fire';
+    const flying = now==='fly';
+    const burntBack = past(L,i,'fire');
+    return svgWrap(`
+      <rect width="800" height="520" fill="${burntBack?'#e2a46e':'#9fc1d6'}"/>
+      <path d="M380 520 L380 120 Q560 -20 800 60 L800 520Z" fill="#5d5560" filter="url(#paper)"/>
+      <path d="M420 520 L440 250 Q520 160 600 250 L620 520Z" fill="#2d2730"/>
+      <g filter="url(#paper)"><path d="M450 520 L455 270 Q520 200 590 270 L595 520Z" fill="#8a6237"/>
+      <path d="M470 270 L470 520 M500 240 L500 520 M540 240 L540 520 M570 260 L570 520" stroke="#6b4a2a" stroke-width="3"/>
+      <circle cx="522" cy="380" r="22" fill="none" stroke="#c9b597" stroke-width="7"/></g>
+      <path d="M0 450 L800 440 L800 520 L0 520Z" fill="#7a6a52"/>
+      ${burntBack?tree(90,450,.9,true)+tree(220,450,.8,true):tree(90,450,.9)+tree(220,450,.8)}
+      ${firing?smoke(60,330,.8):''}
+      ${princess(300,350,1,'bag')}
+      ${fairy(170,250,.8)}
+      <g class="${flying?'zoom':''}">${dragon(sleep?560:640,sleep?470:330,sleep?.9:1,sleep?'sleep':firing?'fire':'awake', sleep?'transform-origin="0 0"':'')}</g>
+    `);
+  },
+  prison(L,i){
+    const now=lastFx(L,i); const item=past(L,i,'item'); const erase=past(L,i,'erase');
+    let bars='';for(let k=0;k<7;k++)bars+=`<rect x="${460+k*40}" y="140" width="12" height="300" rx="4" fill="#8f96a3"/>`;
+    return svgWrap(`
+      <rect width="800" height="520" fill="#3a3340"/>
+      <path d="M0 0 L800 0 L800 90 Q600 130 400 90 Q200 60 0 110Z" fill="#2a2430"/>
+      <path d="M0 440 L800 440 L800 520 L0 520Z" fill="#544a52"/>
+      <rect x="430" y="120" width="320" height="330" fill="#2a2430" filter="url(#paper)"/>
+      <circle cx="380" cy="160" r="14" fill="#f2c14e" opacity=".9"/><path d="M372 174 L388 174 L384 200 L376 200Z" fill="#7a5a3a"/>
+      ${prince(erase?600:590,340,1,erase?'happy':'scared')}
+      ${erase&&now!=='erase'?'':`<g class="${now==='erase'?'fade':''}" filter="url(#paper)">${bars}<rect x="440" y="130" width="300" height="16" fill="#8f96a3"/><rect x="440" y="430" width="300" height="12" fill="#8f96a3"/></g>`}
+      ${princess(250,340,1,'bag')}
+      ${fairy(130,240,.85)}
+      ${now==='item'?itemPop('eraser',320,150):''}
+      ${dragon(150,505,.42,'sleep')}
+    `);
+  },
+  sunrise(L,i){
+    const B=S.ending==='B';
+    let rays='';for(let k=0;k<12;k++)rays+=`<path d="M400 360 L${400+Math.cos(Math.PI+k*Math.PI/11)*700} ${360+Math.sin(Math.PI+k*Math.PI/11)*700} L${400+Math.cos(Math.PI+(k+.45)*Math.PI/11)*700} ${360+Math.sin(Math.PI+(k+.45)*Math.PI/11)*700}Z" fill="#f7d77a" opacity=".55"/>`;
+    const leaving = B && i>=L.length-1;
+    return svgWrap(`
+      <rect width="800" height="520" fill="#f2b45a"/>${rays}
+      <circle cx="400" cy="360" r="90" fill="#fff0b0"/>
+      <path d="M0 380 Q400 340 800 380 L800 520 L0 520Z" fill="#d79a3a" filter="url(#paper)"/>
+      <path d="M0 0 L240 0 L240 520 L0 520Z" fill="#5d5560" opacity=".0"/>
+      ${dragon(150,470,.55,'sleep')}
+      ${B?`${prince(260,330,1,i>=1?'grumpy':'happy')}
+          <g class="${leaving?'dance':''}" style="transform-box:fill-box;transform-origin:center bottom">${princess(leaving?610:400,330,1,'bag')}</g>
+          ${fairy(leaving?700:500,230,.8)}`
+        :`${prince(330,330,1,'happy')}${princess(450,330,1,'bag')}${fairy(560,230,.85)}
+          ${i>=2?`<g class="pop">${[0,1,2,3,4,5,6,7,8].map(k=>`<rect x="${120+k*70}" y="${60+(k%3)*30}" width="12" height="18" fill="${['#e8643a','#3d78c2','#b46ac8','#5fae6a'][k%4]}" transform="rotate(${k*23} ${126+k*70} ${69+(k%3)*30})"/>`).join('')}</g>`:''}`}
+    `);
+  },
+  thorn(opt){
+    const fx = S.fired.thorn;
+    const it = DATA.thorn.options[opt].item;
+    const cleared = fx==='done';
+    return svgWrap(`
+      <rect width="800" height="520" fill="#b9cf9a"/>
+      <path d="M0 380 L800 370 L800 520 L0 520Z" fill="#6f7f4a"/>
+      ${tree(70,380,.9)}${tree(740,380,.9)}
+      <g class="${cleared?'fade':''}">${bush(460,380,1.25)}</g>
+      ${cleared&&it==='pencil'?`<g class="pop"><path d="M380 380 L380 300 Q460 240 540 300 L540 380Z" fill="#fff8d8" stroke="#2a2118" stroke-width="5" stroke-dasharray="10 6"/></g>`:''}
+      ${princess(cleared?470:220,300,1,'bag')}
+      ${fairy(cleared?600:110,210,.85)}
+      ${fx==='item'?itemPop(it==='glue'?'glue':it,640,140):''}
+    `);
+  }
+};
+
+/* ---------- role portraits (for roles page) ---------- */
+function portrait(r){
+  const inner = r==='P'?princess(100,90,1,'bag'):r==='R'?prince(100,100,1):r==='F'?fairy(100,100,1.3):dragon(112,140,.5);
+  return `<svg viewBox="0 0 200 210">${defs}${inner}</svg>`;
+}
+
+/* ---------- speech ---------- */
+let voices=[];
+function loadVoices(){ try{voices=speechSynthesis.getVoices()}catch(e){} }
+if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged=loadVoices; }
+function pickVoice(lang){
+  const v=voices.filter(v=>v.lang&&v.lang.replace('_','-').toLowerCase().startsWith(lang));
+  const pref=v.find(x=>/google|natural|online|samantha|aria|jenny/i.test(x.name));
+  return pref||v[0]||null;
+}
+const VOICE={P:{pitch:1.3,rate:1},R:{pitch:.95,rate:1},F:{pitch:1.7,rate:1.05},D:{pitch:.35,rate:.82}};
+function speak(text,role){
+  return new Promise(res=>{
+    if(!('speechSynthesis' in window)){res();return}
+    const isKo = role==='N';
+    const clean = text.replace(/Zzz…?/g,'').replace(/…/g,', ').replace(/\(.*?\)/g,'').trim();
+    if(!clean){setTimeout(res,600);return}
+    const u=new SpeechSynthesisUtterance(clean);
+    u.lang=isKo?'ko-KR':'en-US';
+    const v=pickVoice(isKo?'ko':'en-us')||pickVoice(isKo?'ko':'en'); if(v)u.voice=v;
+    const p=VOICE[role]||{pitch:1,rate:1};
+    u.pitch=p.pitch; u.rate=(isKo?1:p.rate)*S.rate*(isKo?1.1:1);
+    let done=false; const fin=()=>{if(!done){done=true;res()}};
+    u.onend=fin; u.onerror=fin;
+    setTimeout(fin, 900 + clean.length*140/S.rate);
+    speechSynthesis.speak(u);
+  });
+}
+function stopSpeech(){ try{speechSynthesis.cancel()}catch(e){} S.playing=false; }
+
+/* ---------- sound fx ---------- */
+let ac=null;
+function ctx(){ if(!ac){ try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){} } return ac; }
+function noise(dur,f0,f1,gain=.4,type='lowpass'){
+  const a=ctx(); if(!a||!S.sfx)return;
+  const b=a.createBuffer(1,a.sampleRate*dur,a.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
+  const s=a.createBufferSource();s.buffer=b;
+  const f=a.createBiquadFilter();f.type=type;f.frequency.setValueAtTime(f0,a.currentTime);f.frequency.exponentialRampToValueAtTime(f1,a.currentTime+dur);
+  const g=a.createGain();g.gain.setValueAtTime(.001,a.currentTime);g.gain.exponentialRampToValueAtTime(gain,a.currentTime+.08);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+dur);
+  s.connect(f).connect(g).connect(a.destination);s.start();
+}
+function chime(){
+  const a=ctx(); if(!a||!S.sfx)return;
+  [880,1175,1568,2093].forEach((fr,k)=>{const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=fr;
+    const t=a.currentTime+k*.09;g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.5);
+    o.connect(g).connect(a.destination);o.start(t);o.stop(t+.55)});
+}
+function growl(){
+  const a=ctx(); if(!a||!S.sfx)return;
+  const o=a.createOscillator(),g=a.createGain();o.type='sawtooth';o.frequency.setValueAtTime(90,a.currentTime);o.frequency.linearRampToValueAtTime(55,a.currentTime+1.1);
+  g.gain.setValueAtTime(.001,a.currentTime);g.gain.exponentialRampToValueAtTime(.25,a.currentTime+.1);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+1.2);
+  o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+1.25);noise(1.1,600,120,.25);
+}
+const FXSOUND={roar:growl,grab:()=>noise(1.6,2000,300,.2,'bandpass'),item:chime,dress:()=>{noise(.15,4000,3000,.3,'highpass');setTimeout(()=>noise(.15,4000,3000,.3,'highpass'),220);setTimeout(chime,450)},
+  fix:chime,fire:()=>noise(1.3,300,2500,.45),fly:()=>noise(2,400,1600,.3,'bandpass'),sleep:()=>{},erase:()=>{for(let k=0;k<4;k++)setTimeout(()=>noise(.2,2500,1200,.25,'bandpass'),k*230);setTimeout(chime,1000)}};
+
+/* ---------- rendering ---------- */
+const $=s=>document.querySelector(s);
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function blankify(t){
+  if(!S.blanks) return esc(t);
+  let out=esc(t);
+  ['scissors','a glue stick','a pencil','an eraser'].forEach(w=>{ out=out.replace(new RegExp(w.replace(' ','\\s'),'g'),'<span class="blank">'+w+'</span>') });
+  return out;
+}
+
+function renderTabs(){
+  $('#tabs').innerHTML = PAGES.map(p=>`<button class="tab" data-p="${p.id}" aria-current="${S.page===p.id}">${p.id.startsWith('s')&&p.id!=='story'?'장면 '+p.label:p.label}${p.sub&&!p.id.startsWith('s')?`<small>${p.sub}</small>`:''}</button>`).join('');
+  $('#tabs').querySelectorAll('.tab').forEach(b=>b.onclick=()=>go(b.dataset.p));
+}
+
+function go(p){ stopSpeech(); S.page=p; S.line=0; S.revealed={}; S.fired={}; render(); }
+
+function render(){
+  renderTabs();
+  const sc=curScene();
+  if(sc) return renderScene(sc);
+  if(S.page==='thorn') return renderThorn();
+  $('#ctrl').innerHTML='';
+  if(S.page==='cover') renderCover();
+  if(S.page==='story') renderStory();
+  if(S.page==='roles') renderRoles();
+  if(S.page==='tools') renderTools();
+}
+
+/* image override per scene (teacher's own art) */
+let IMG={};
+const idb = (()=>{ let db=null; return {
+  open(){ return new Promise(r=>{ try{ const q=indexedDB.open('pb-art',1); q.onupgradeneeded=()=>q.result.createObjectStore('img'); q.onsuccess=()=>{db=q.result;r()}; q.onerror=()=>r(); }catch(e){r()} }) },
+  put(k,v){ try{ db&&db.transaction('img','readwrite').objectStore('img').put(v,k) }catch(e){} },
+  del(k){ try{ db&&db.transaction('img','readwrite').objectStore('img').delete(k) }catch(e){} },
+  all(){ return new Promise(r=>{ try{ if(!db) return r({}); const o={}; const st=db.transaction('img').objectStore('img'); const c=st.openCursor(); c.onsuccess=()=>{const cur=c.result; if(cur){o[cur.key]=cur.value;cur.continue()} else r(o)}; c.onerror=()=>r({}); }catch(e){r({})} }) }
+};})();
+
+function stageHTML(key,svg){
+  if(IMG[key]) return `<img src="${IMG[key]}" alt="교사가 넣은 장면 그림">`;
+  return svg;
+}
+
+function renderScene(sc){
+  const L=sceneLines(sc);
+  if(S.line>=L.length) S.line=L.length-1;
+  const key='s'+sc.id;
+  $('#main').innerHTML = `
+   <section class="stagewrap">
+     <div class="scenecap"><h2>장면 ${sc.id}. ${sc.title}${sc.original?'<span class="badge">원작 장면</span>':''}${sc.ending?`<span class="badge">${DATA.scenes[5].endings[S.ending].name}</span>`:''}</h2>
+       <div class="imgtools"><span class="place">${sc.place}</span>
+       <button class="iconbtn" id="imgUp" title="직접 만든 그림으로 바꾸기">그림 바꾸기</button>${IMG[key]?'<button class="iconbtn" id="imgReset">기본 그림</button>':''}</div></div>
+     <div class="stage" id="stage">${stageHTML(key,RENDER[sc.bg](L,S.line))}</div>
+   </section>
+   <section class="sheet ${S.showKo?'':'hide-ko'} ${S.showNarr?'':'hide-narr'}">
+     <div class="sheethead"><b>대본 · Scene ${sc.id}</b>
+       <span style="font-size:.85rem;color:var(--ink-soft)">줄을 누르면 그 줄로 이동해요</span></div>
+     ${sc.ending?`<div class="endpick">${['A','B'].map(k=>`<button data-end="${k}" aria-pressed="${S.ending===k}"><b>${DATA.scenes[5].endings[k].name}</b>${DATA.scenes[5].endings[k].desc}</button>`).join('')}</div>`:''}
+     <div class="lines" id="lines">${L.map((l,i)=>lineHTML(l,i)).join('')}</div>
+   </section>`;
+  bindLines(L);
+  if(sc.ending) document.querySelectorAll('[data-end]').forEach(b=>b.onclick=()=>{stopSpeech();S.ending=b.dataset.end;S.line=0;savePrefs();render()});
+  $('#imgUp').onclick=()=>{ pendingImg=key; $('#imgInput').click(); };
+  if($('#imgReset')) $('#imgReset').onclick=()=>{ delete IMG[key]; idb.del(key); render(); };
+  renderCtrl(true);
+  scrollCur();
+}
+function lineHTML(l,i){
+  const cur=i===S.line?'cur':i<S.line?'done':'';
+  if(l.r==='N') return `<button class="line narr ${cur}" data-i="${i}"><span class="chip">이야기</span><span class="story">${esc(l.t)}</span><span></span></button>`;
+  const hid = S.hideRole===l.r ? 'hidden-line'+(S.revealed[i]?' revealed':'') : '';
+  return `<button class="line ${cur} ${l.key?'key':''} ${hid}" data-i="${i}">
+     <span class="chip" style="background:${RC[l.r]}">${ROLE[l.r].ko}<small>${ROLE[l.r].en}</small></span>
+     <span class="en">${blankify(l.t)}<span class="ko">${esc(l.k||'')}</span></span>
+     <span class="say" data-say="${i}" role="button" aria-label="듣기">▶</span></button>`;
+}
+function bindLines(L){
+  document.querySelectorAll('#lines .line').forEach(b=>b.onclick=e=>{
+    const i=+b.dataset.i;
+    if(b.classList.contains('hidden-line') && i===S.line && !S.revealed[i]){ S.revealed[i]=true; refreshScene(); return; }
+    stopSpeech(); setLine(i, !!e.target.closest('[data-say]'));
+  });
+}
+function scrollCur(){ const c=document.querySelector('.line.cur'); if(c) c.scrollIntoView({block:'nearest'}); }
+function refreshScene(){
+  const sc=curScene(); if(!sc){ if(S.page==='thorn') renderThorn(); return; }
+  const L=sceneLines(sc);
+  $('#stage').innerHTML=stageHTML('s'+sc.id,RENDER[sc.bg](L,S.line));
+  $('#lines').innerHTML=L.map((l,i)=>lineHTML(l,i)).join('');
+  bindLines(L); scrollCur(); updateCtrl();
+}
+function setLine(i,speakIt){
+  const sc=curScene(); const L=sceneLines(sc);
+  S.line=Math.max(0,Math.min(L.length-1,i));
+  refreshScene();
+  const l=L[S.line];
+  if(l.fx && FXSOUND[l.fx]) FXSOUND[l.fx]();
+  if(speakIt) return speakLine(l);
+}
+async function speakLine(l){
+  if(l.r==='N' && !S.narrTTS) return;
+  await speak(l.t,l.r);
+}
+async function playAll(){
+  if(S.playing){ stopSpeech(); updateCtrl(); return; }
+  const sc=curScene(); const L=sceneLines(sc);
+  S.playing=true; updateCtrl();
+  for(let i=S.line;i<L.length;i++){
+    if(!S.playing) break;
+    S.line=i; refreshScene();
+    const l=L[i]; if(l.fx&&FXSOUND[l.fx]) FXSOUND[l.fx]();
+    if(l.r==='N'){ if(S.narrTTS) await speak(l.t,'N'); else await wait(Math.min(5200,1400+l.t.length*55)); }
+    else{
+      await speak(l.t,l.r);
+      if(S.repeat && S.playing){ markRepeat(true); await wait(1400+l.t.length*120/S.rate); markRepeat(false); }
+      else await wait(450);
+    }
+  }
+  S.playing=false; updateCtrl();
+}
+function markRepeat(on){ const c=document.querySelector('.line.cur .say'); if(c){ c.textContent=on?'🗣':'▶'; c.style.background=on?'var(--gold)':''; } }
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+function renderCtrl(scene){
+  const roleOpts=['',...Object.keys(ROLE)].map(r=>`<option value="${r}" ${S.hideRole===r?'selected':''}>${r?ROLE[r].ko+' 대사 가리기':'가리기 없음'}</option>`).join('');
+  $('#ctrl').innerHTML = `
+    <button class="big alt" id="prev">◀ 이전 줄</button>
+    <button class="big" id="play">▶ 장면 전체 듣기</button>
+    <button class="big alt" id="next">다음 줄 ▶</button>
+    <span class="sep"></span>
+    <button class="big alt" id="rep" aria-pressed="${S.repeat}" title="한 줄 듣고 다 같이 따라 말하기">따라 말하기</button>
+    <button class="big alt" id="ko" aria-pressed="${S.showKo}">우리말 뜻</button>
+    <button class="big alt" id="bl" aria-pressed="${S.blanks}" title="학용품 낱말을 빈칸으로">낱말 빈칸</button>
+    <label>연습<select id="hide">${roleOpts}</select></label>
+    <label>내레이션<select id="narr"><option value="t" ${!S.narrTTS?'selected':''}>선생님이 읽기</option><option value="v" ${S.narrTTS?'selected':''}>음성으로 읽기</option><option value="h" ${!S.showNarr?'selected':''}>숨기기</option></select></label>
+    <label>속도<select id="rate"><option value="0.7" ${S.rate==0.7?'selected':''}>천천히</option><option value="0.85" ${S.rate==0.85?'selected':''}>보통</option><option value="1" ${S.rate==1?'selected':''}>빠르게</option></select></label>`;
+  $('#prev').onclick=()=>{stopSpeech();setLine(S.line-1,true)};
+  $('#next').onclick=()=>{stopSpeech();nextLine()};
+  $('#play').onclick=()=>{ if(S.page==='thorn') return playThorn(); playAll(); };
+  $('#rep').onclick=()=>{S.repeat=!S.repeat;updateCtrl()};
+  $('#ko').onclick=()=>{S.showKo=!S.showKo;savePrefs();document.querySelector('.sheet')?.classList.toggle('hide-ko',!S.showKo);updateCtrl()};
+  $('#bl').onclick=()=>{S.blanks=!S.blanks;refreshScene();};
+  $('#hide').onchange=e=>{S.hideRole=e.target.value;S.revealed={};refreshScene()};
+  $('#narr').onchange=e=>{const v=e.target.value;S.narrTTS=v==='v';S.showNarr=v!=='h';document.querySelector('.sheet')?.classList.toggle('hide-narr',!S.showNarr);if(!S.showNarr)skipNarr(1)};
+  $('#rate').onchange=e=>{S.rate=+e.target.value;savePrefs()};
+}
+function updateCtrl(){
+  const set=(id,v)=>{const b=$(id); if(b) b.setAttribute('aria-pressed',v)};
+  set('#rep',S.repeat); set('#ko',S.showKo); set('#bl',S.blanks);
+  const p=$('#play'); if(p && S.page!=='thorn') p.textContent=S.playing?'■ 멈추기':'▶ 장면 전체 듣기';
+}
+function skipNarr(dir){
+  const sc=curScene(); if(!sc||S.showNarr) return;
+  const L=sceneLines(sc); let i=S.line;
+  while(L[i]&&L[i].r==='N'&&i+dir>=0&&i+dir<L.length) i+=dir;
+  if(i!==S.line) setLine(i,false);
+}
+function nextLine(){
+  const sc=curScene(); if(!sc) return;
+  const L=sceneLines(sc);
+  if(S.line>=L.length-1){ const idx=PAGES.findIndex(p=>p.id===S.page); if(PAGES[idx+1]) go(PAGES[idx+1].id); return; }
+  let i=S.line+1; if(!S.showNarr) while(L[i]&&L[i].r==='N'&&i<L.length-1) i++;
+  setLine(i,true);
+}
+
+/* thorn creative scene */
+function renderThorn(){
+  const T=DATA.thorn, o=T.options[S.thorn];
+  $('#main').innerHTML=`
+   <section class="stagewrap">
+     <div class="scenecap"><h2>${T.title}<span class="badge">모둠 창작</span></h2><div class="imgtools"><span class="place">장면 3 대신 넣어 보아요</span></div></div>
+     <div class="stage" id="stage">${stageHTML('thorn',RENDER.thorn(S.thorn))}</div>
+   </section>
+   <section class="sheet ${S.showKo?'':'hide-ko'}">
+     <div class="sheethead"><b>어떻게 빠져나갈까?</b></div>
+     <div class="lines" style="padding-top:12px"><p style="margin:0 6px 4px;line-height:1.6;color:var(--ink-soft)">${T.intro}</p>
+     <div class="thornopts" style="padding:0">${T.options.map((x,k)=>`<button class="topt" data-k="${k}" aria-pressed="${S.thorn===k}"><b>${k+1}. ${x.ko}</b><span class="en">A: ${blankify(x.q)}</span><span class="en">B: ${blankify(x.a)}</span></button>`).join('')}</div>
+     <p style="margin:8px 6px 0;line-height:1.6;color:var(--ink-soft)">우리 모둠만의 방법도 좋아요. 학습지 4번에 대사를 써 보세요.</p></div>
+   </section>`;
+  document.querySelectorAll('.topt').forEach(b=>b.onclick=()=>{stopSpeech();S.thorn=+b.dataset.k;S.fired.thorn=null;renderThorn()});
+  renderCtrl(false);
+  $('#prev').textContent='◀ 다시'; $('#next').textContent='다음: 연습·발표 ▶';
+  $('#prev').onclick=()=>{S.fired.thorn=null;renderThorn()};
+  $('#next').onclick=()=>go('tools');
+  $('#play').textContent='▶ 장면 연기 보기';
+}
+async function playThorn(){
+  const o=DATA.thorn.options[S.thorn];
+  S.fired.thorn=null; $('#stage').innerHTML=RENDER.thorn(S.thorn);
+  await speak(o.q,'P'); await wait(300);
+  S.fired.thorn='item'; $('#stage').innerHTML=RENDER.thorn(S.thorn); chime();
+  await speak(o.a,'F'); await wait(500);
+  S.fired.thorn='done'; $('#stage').innerHTML=RENDER.thorn(S.thorn); FXSOUND.erase();
+}
+
+/* static pages */
+function renderCover(){
+  $('#main').innerHTML=`<section class="page"><div class="cover">
+    <div>
+      <div class="eyebrow">3학년 영어 · Lesson 7 I Have a Pencil · Story Land</div>
+      <h1>종이 봉지 공주의<br><em>왕자 구출 대작전</em></h1>
+      <p>용에게 잡혀간 왕자를 구하러 종이 봉지 옷을 입고 길을 떠난 공주. 교과서 이야기에 원작 『종이 봉지 공주』의 장면과 결말을 더해, 네 명이 한 모둠이 되어 역할극을 연습해요.</p>
+      <div class="goal"><b style="font-family:var(--f-display);font-weight:400">오늘의 핵심 표현</b>
+        <span>A: Do you have scissors?</span><span>B: Yes, I do. / No, I don't.</span><span>I have an eraser.</span></div>
+      <div class="row" style="margin-top:18px"><button class="big" id="startBtn">이야기 시작하기</button><button class="big alt" id="rolesBtn">역할 정하기</button></div>
+    </div>
+    <div class="stage">${svgWrap(`<rect width="800" height="520" fill="#f2b45a"/><circle cx="560" cy="150" r="90" fill="#fff0b0"/><path d="M0 400 Q400 350 800 400 L800 520 L0 520Z" fill="#d79a3a" filter="url(#paper)"/>${dragon(660,360,.9)}${princess(270,300,1.2,'bag')}${fairy(140,200,1)}`)}</div>
+  </div></section>`;
+  $('#startBtn').onclick=()=>go('s1'); $('#rolesBtn').onclick=()=>go('roles');
+}
+function renderStory(){
+  $('#main').innerHTML=`<section class="page"><h2 class="ptitle">원작 『종이 봉지 공주』는 어떤 이야기일까?</h2>
+   <div class="storycols">
+    <div class="storybox">
+      <p>성에 사는 공주는 곧 왕자와 결혼할 예정이었어요. 그런데 어느 날 무서운 용이 나타나 성을 불태우고 왕자를 잡아가 버렸어요. 공주의 옷도 다 타 버렸지요.</p>
+      <p>공주는 타고 남은 종이 봉지를 옷처럼 입고 용을 쫓아갔어요. 용의 동굴에 도착한 공주는 힘으로 싸우지 않고 <b>꾀</b>를 냈어요. 용을 칭찬하며 불을 뿜게 하고, 세상을 한 바퀴 날아 보게 했지요. 몇 번이나 그러다 지친 용은 그만 깊이 잠들어 버렸어요.</p>
+      <p>드디어 왕자를 만났는데, 왕자는 고맙다는 말 대신 공주의 옷차림이 엉망이라며 투덜댔어요. 공주는 그런 왕자를 두고 햇살 속으로 혼자 신나게 떠났답니다.</p>
+      <p class="src">원작: 로버트 먼치 글 · 마이클 마첸코 그림. 위 줄거리는 수업용으로 짧게 다시 쓴 것이에요.</p>
+    </div>
+    <div class="cmp">
+      ${[
+        ['교과서 이야기에서 공주를 도와주는 새 인물은?','요정이에요. 원작에는 요정이 없고, 공주가 혼자 길을 떠나요.'],
+        ['공주는 어떻게 문제를 해결했나요?','교과서에서는 요정에게 학용품(가위, 풀, 지우개)을 빌려요. 원작에서는 용을 칭찬하며 지치게 만드는 꾀를 써요.'],
+        ['두 이야기에서 같은 점은?','용이 왕자를 잡아가고, 공주가 종이 봉지 옷을 입고 용감하게 왕자를 구하러 가요.'],
+        ['원작의 결말은 어떻게 다를까요?','왕자가 고마워하지 않고 옷차림만 탓해요. 공주는 왕자를 두고 혼자 떠나요. 오늘은 두 결말 중 하나를 골라 연기해요.']
+      ].map((q,k)=>`<div class="qcard"><b>${q[0]}</b><div class="ans" id="ans${k}" hidden>${q[1]}</div><div><button class="iconbtn" data-a="${k}">생각 열어 보기</button></div></div>`).join('')}
+    </div></div></section>`;
+  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{const a=$('#ans'+b.dataset.a);a.hidden=!a.hidden;b.textContent=a.hidden?'생각 열어 보기':'닫기'});
+}
+function countLines(r){ let n=0; DATA.scenes.forEach(s=>{ (s.ending?s.endings[S.ending].lines:s.lines).forEach(l=>{if(l.r===r)n++}) }); return n; }
+function renderRoles(){
+  const info={
+    P:['용감하고 꾀가 많은 주인공. 대사가 가장 많아요.','Do you have scissors?'],
+    R:['용에게 잡혀가 감옥에 갇혀요. 크게 외치는 대사가 있어요.','Open the door!'],
+    F:['공주를 도와주는 마법 요정. 학용품을 꺼내 줘요.','Yes, I do. Here.'],
+    D:['불을 뿜고 하늘을 나는 용. 소리를 실감 나게!','Roar! Whoosh!']
+  };
+  $('#main').innerHTML=`<section class="page"><h2 class="ptitle">모둠 네 명, 역할을 정해요</h2>
+   <div class="cardgrid">${Object.keys(ROLE).map(r=>`<article class="rcard">${portrait(r)}
+     <h3 style="color:${RC[r]}">${ROLE[r].ko}<small>${ROLE[r].en}</small></h3>
+     <p>${info[r][0]}</p><span class="count">대사 ${countLines(r)}줄 (${DATA.scenes[5].endings[S.ending].name} 기준)</span>
+     <div class="tip">${info[r][1]}</div></article>`).join('')}</div>
+   <p style="margin-top:16px;color:#e9dcc6;line-height:1.7">이야기 부분(내레이션)은 선생님이 읽어 주거나, 모둠에서 대사가 적은 친구가 함께 읽어도 좋아요. 영어가 어려운 친구는 짧은 대사가 있는 역할부터 도전해요.</p></section>`;
+}
+let tmr={left:300,total:300,id:null};
+function renderTools(){
+  $('#main').innerHTML=`<section class="page"><h2 class="ptitle">연습하고 발표해요</h2><div class="tools">
+   <article class="tool"><h3>모둠 연습 시간</h3>
+     <div class="row">${[3,5,7,10].map(m=>`<button class="pill" data-m="${m}" aria-pressed="${tmr.total===m*60}">${m}분</button>`).join('')}</div>
+     <div class="timer" id="tm">5:00</div>
+     <div class="row"><button class="dark" id="tgo">시작</button><button class="pill" id="trs">다시</button></div>
+     <p style="margin:0;color:var(--ink-soft);line-height:1.6">① 내 대사에 형광펜 ② 혼자 읽기 ③ 모둠과 맞춰 읽기 ④ 몸짓 넣어 연기하기</p></article>
+   <article class="tool"><h3>발표 순서 뽑기</h3>
+     <label class="row">모둠 수 <input id="gn" type="number" min="2" max="10" value="6" style="width:4.5em;font:inherit;padding:6px;border:2px solid var(--ink);border-radius:8px;background:#fff;color:var(--ink)"></label>
+     <button class="dark" id="draw">순서 뽑기</button>
+     <ol class="order" id="ord"><li>1모둠</li><li>2모둠</li><li>3모둠</li></ol></article>
+   <article class="tool"><h3>우리 모둠 별점</h3>
+     <div class="stars"><div>영어 표현 <span>☆☆☆</span></div><div>자신감 <span>☆☆☆</span></div><div>협동심 <span>☆☆☆</span></div></div>
+     <p style="margin:0;line-height:1.65">발표가 끝나면 학습지에 별을 색칠해요. <b>가장 실감 나게 연기한 친구</b>의 이름을 쓰고 칭찬 한마디를 남겨요.</p>
+     <p style="margin:0;line-height:1.65;color:var(--ink-soft)">듣는 친구들은 조용히, 발표가 끝나면 큰 박수!</p></article>
+  </div></section>`;
+  const show=()=>{const m=Math.floor(Math.abs(tmr.left)/60),s=Math.abs(tmr.left)%60;const el=$('#tm');if(!el)return;el.textContent=(tmr.left<0?'+':'')+m+':'+String(s).padStart(2,'0');el.classList.toggle('over',tmr.left<=0)};
+  show();
+  document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{clearInterval(tmr.id);tmr.id=null;tmr.total=tmr.left=+b.dataset.m*60;renderTools()});
+  $('#tgo').textContent=tmr.id?'멈춤':'시작';
+  $('#tgo').onclick=()=>{ if(tmr.id){clearInterval(tmr.id);tmr.id=null;$('#tgo').textContent='시작';return}
+    tmr.id=setInterval(()=>{tmr.left--;show();if(tmr.left===0)chime()},1000);$('#tgo').textContent='멈춤'};
+  $('#trs').onclick=()=>{clearInterval(tmr.id);tmr.id=null;tmr.left=tmr.total;show();$('#tgo').textContent='시작'};
+  $('#draw').onclick=()=>{const n=Math.max(2,Math.min(10,+$('#gn').value||6));const a=Array.from({length:n},(_,i)=>i+1);for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+    $('#ord').innerHTML=a.map(x=>`<li>${x}모둠</li>`).join('');chime()};
+}
+
+/* ---------- global ---------- */
+let pendingImg=null;
+$('#imgInput').onchange=e=>{
+  const f=e.target.files[0]; if(!f||!pendingImg) return;
+  const r=new FileReader(); r.onload=()=>{ IMG[pendingImg]=r.result; idb.put(pendingImg,r.result); render(); }; r.readAsDataURL(f); e.target.value='';
+};
+$('#sfxBtn').setAttribute('aria-pressed',S.sfx);
+$('#sfxBtn').onclick=()=>{S.sfx=!S.sfx;savePrefs();$('#sfxBtn').setAttribute('aria-pressed',S.sfx)};
+$('#fsBtn').onclick=()=>{ try{ document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{}) }catch(e){} };
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,select,textarea')) return;
+  const sc=curScene();
+  if(e.key==='ArrowRight'&&sc){e.preventDefault();stopSpeech();nextLine()}
+  else if(e.key==='ArrowLeft'&&sc){e.preventDefault();stopSpeech();setLine(S.line-1,true)}
+  else if(e.key===' '&&sc&&!e.target.closest('button')){e.preventDefault();stopSpeech();speakLine(sceneLines(sc)[S.line])}
+  else if(e.key==='PageDown'){const i=PAGES.findIndex(p=>p.id===S.page);if(PAGES[i+1])go(PAGES[i+1].id)}
+  else if(e.key==='PageUp'){const i=PAGES.findIndex(p=>p.id===S.page);if(i>0)go(PAGES[i-1].id)}
+});
+render();
+idb.open().then(()=>idb.all()).then(o=>{IMG=o||{}; if(Object.keys(IMG).length) render();});
+</script>
+
+<script>
+/* ===== Media layer: real images, videos, voices, sfx, bgm (GitHub Pages build) ===== */
+(function(){
+const VOICES = new Set(["line_s1_01_narrator.mp3", "line_s1_02_dragon.mp3", "line_s1_03_princess.mp3", "line_s1_04_prince.mp3", "line_s1_05_fairy.mp3", "line_s1_06_narrator.mp3", "line_s1_07_prince.mp3", "line_s2_01_narrator.mp3", "line_s2_02_princess.mp3", "line_s2_03_fairy.mp3", "line_s2_04_princess.mp3", "line_s2_05_fairy.mp3", "line_s2_06_narrator.mp3", "line_s2_07_princess.mp3", "line_s3_01_narrator.mp3", "line_s3_02_princess.mp3", "line_s3_03_fairy.mp3", "line_s3_04_princess.mp3", "line_s3_05_narrator.mp3", "line_s4_01_narrator.mp3", "line_s4_02_princess.mp3", "line_s4_03_dragon.mp3", "line_s4_04_narrator.mp3", "line_s4_05_princess.mp3", "line_s4_06_dragon.mp3", "line_s4_07_princess.mp3", "line_s4_08_dragon.mp3", "line_s4_09_princess.mp3", "line_s4_10_dragon.mp3", "line_s4_11_narrator.mp3", "line_s4_12_princess.mp3", "line_s4_13_dragon.mp3", "line_s4_14_narrator.mp3", "line_s5_01_narrator.mp3", "line_s5_02_prince.mp3", "line_s5_03_narrator.mp3", "line_s5_04_princess.mp3", "line_s5_05_fairy.mp3", "line_s5_06_princess.mp3", "line_s5_07_fairy.mp3", "line_s5_08_narrator.mp3", "line_s6A_01_prince.mp3", "line_s6A_02_princess.mp3", "line_s6A_03_fairy.mp3", "line_s6A_04_dragon.mp3", "line_s6A_05_narrator.mp3", "line_s6B_01_narrator.mp3", "line_s6B_02_prince.mp3", "line_s6B_03_princess.mp3", "line_s6B_04_princess.mp3", "line_s6B_05_narrator.mp3", "line_thorn_eraser_fairy.mp3", "line_thorn_eraser_princess.mp3", "line_thorn_pencil_fairy.mp3", "line_thorn_pencil_princess.mp3", "line_thorn_scissors_fairy.mp3", "line_thorn_scissors_princess.mp3"]);
+const IMGMAP = {
+  s1:['s1_1_garden','s1_2_dragon','s1_2_dragon','s1_2_dragon','s1_2_dragon','s1_3_burn','s1_3_burn'],
+  s2:['s2_1_ruins','s2_2_scissors','s2_2_scissors','s2_2_scissors','s2_2_scissors','s2_3_dress','s2_3_dress'],
+  s3:['s3_1_bridge','s3_1_bridge','s3_1_bridge','s3_1_bridge','s3_2_glue'],
+  s4:['s4_1_knock','s4_1_knock','s4_1_knock','s4_1_knock','s4_2_fire','s4_2_fire','s4_2_fire','s4_3_nofire','s4_4_fly','s4_4_fly','s4_4_fly','s4_4_fly','s4_5_sleep','s4_5_sleep'],
+  s5:['s5_1_prison','s5_1_prison','s5_2_pencil','s5_2_pencil','s5_2_pencil','s5_2_pencil','s5_2_pencil','s5_3_eraser'],
+  s6A:['s6_A_happy','s6_A_happy','s6_A_happy','s6_A_happy','s6_A_happy'],
+  s6B:['s6_B1_messy','s6_B1_messy','s6_B1_messy','s6_B2_dance','s6_B2_dance']
+};
+const SFXMAP = { // key -> {lineIndex(0-based): [sfx...]}
+  s1:{1:['roar'],6:['wings']}, s2:{2:['magic'],5:['snip','paper']}, s3:{2:['magic'],4:['glue','tada']},
+  s4:{0:['knock'],1:['knock'],5:['fire'],7:['puff'],9:['zoom'],12:['snore']},
+  s5:{1:['bars'],6:['magic'],7:['erase','tada']}, s6A:{2:['yay']}, s6B:{4:['tada']}
+};
+const ITEMPOP = { s2:{2:'scissors'}, s3:{2:'gluestick'}, s5:{6:'eraser'} };
+const VIDMAP = { s1:{1:'v_s1a_land',6:'v_s1b_flyaway'}, s2:{5:'v_s2_dress'}, s3:{4:'v_s3_bridge'},
+  s4:{5:'v_s4_fire',9:'v_s4_fly',12:'v_s4_sleep'}, s5:{7:'v_s5_erase'}, s6B:{3:'v_s6_dance'} };
+const BGMMAP = {cover:'castle',story:'castle',roles:'castle',s1:'castle',s2:'adventure',s3:'adventure',s4:'cave',s5:'cave',thorn:'adventure',tools:'practice'};
+const ROLEFILE = {P:'princess',R:'prince',F:'fairy',D:'dragon',N:'narrator'};
+
+S.narrTTS = true;           // recorded narration exists → read it by default
+S.bgm = true;
+try{ const v=localStorage.getItem('pb-bgm'); if(v!==null) S.bgm = v==='1'; }catch(e){}
+
+function skey(){ const sc=curScene(); if(!sc) return S.page; return sc.ending ? 's6'+S.ending : 's'+sc.id; }
+function fileRate(){ return S.rate/0.85; }
+
+/* ---------- audio ---------- */
+let bgmEl=null, bgmName='', voiceEl=null;
+function bgmTarget(){ if(S.page==='s6') return S.ending==='A'?'happy_end':'dance_end'; return BGMMAP[S.page]||'castle'; }
+function updateBGM(){
+  const want = S.bgm ? bgmTarget() : '';
+  if(!want){ if(bgmEl) bgmEl.pause(); return; }
+  if(want!==bgmName || !bgmEl){
+    if(bgmEl) bgmEl.pause();
+    bgmEl = new Audio('bgm/bgm_'+want+'.mp3'); bgmEl.loop = true; bgmEl.volume = .22; bgmName = want;
+  }
+  if(!videoPlaying) bgmEl.play().catch(()=>{});
+}
+function duck(on){ if(bgmEl) bgmEl.volume = on ? .07 : .22; }
+function playSfx(name){
+  if(!S.sfx) return;
+  try{ const a=new Audio('sfx/sfx_'+name+'.mp3'); a.volume=.7; a.play().catch(()=>{}); }catch(e){}
+}
+function playFile(url){
+  return new Promise(res=>{
+    try{ if(voiceEl){ voiceEl.pause(); } }catch(e){}
+    const a = new Audio(url); voiceEl = a;
+    a.preservesPitch = true; a.playbackRate = fileRate();
+    let done=false; const fin=ok=>{ if(!done){ done=true; duck(false); res(ok); } };
+    a.onended=()=>fin(true); a.onerror=()=>fin(false);
+    duck(true);
+    a.play().catch(()=>fin(false));
+  });
+}
+const _stopSpeech = stopSpeech;
+stopSpeech = function(){ _stopSpeech(); try{ if(voiceEl) voiceEl.pause(); }catch(e){} duck(false); };
+
+function voiceUrl(key,i,role){
+  const f = `line_${key}_${String(i+1).padStart(2,'0')}_${ROLEFILE[role]}.mp3`;
+  return VOICES.has(f) ? 'voice/'+f : null;
+}
+async function sayLine(l,key,i){
+  const url = voiceUrl(key,i,l.r);
+  if(url){ const ok = await playFile(url); if(ok) return; }
+  await speak(l.t,l.r);
+}
+speakLine = async function(l){
+  if(l.r==='N' && !S.narrTTS) return;
+  const sc=curScene(); if(!sc) return speak(l.t,l.r);
+  await sayLine(l, skey(), S.line);
+};
+
+/* ---------- stage ---------- */
+function imgFor(key,i){ const m=IMGMAP[key]; return m ? 'img/'+m[Math.min(i,m.length-1)]+'.jpg' : null; }
+function thornImg(){ return 'img/thorn_'+DATA.thorn.options[S.thorn].item+'.jpg'; }
+stageHTML = function(key){
+  const src = key==='thorn' ? thornImg() : imgFor(skey(), S.line);
+  const myst = key==='thorn' && S.fired.thorn!=='done';
+  return `<img id="scimg" class="${myst?'mystery':''}" src="${src}" alt="">${myst?'<div class="mtext">어떤 학용품으로 빠져나갈까?</div>':''}<div id="itempop" hidden></div>
+    <div id="vidlayer" hidden><video id="vid" playsinline></video><button class="vclose" id="vclose">닫기 ✕</button></div>`;
+};
+function updateStage(){
+  const im=document.getElementById('scimg'); if(!im){ document.getElementById('stage').innerHTML=stageHTML(S.page==='thorn'?'thorn':''); bindVideoClose(); return; }
+  const src = S.page==='thorn' ? thornImg() : imgFor(skey(), S.line);
+  if(S.page==='thorn'){ const myst=S.fired.thorn!=='done'; im.classList.toggle('mystery',myst); const t=document.querySelector('.mtext'); if(t) t.hidden=!myst; }
+  if(src && !im.src.endsWith(src)){ im.classList.remove('fadein'); void im.offsetWidth; im.src=src; im.classList.add('fadein'); }
+}
+function showItem(name){
+  const p=document.getElementById('itempop'); if(!p) return;
+  p.innerHTML=`<img src="img/item_${name}.jpg" alt="">`; p.hidden=false; p.classList.remove('popin'); void p.offsetWidth; p.classList.add('popin');
+  clearTimeout(showItem.t); showItem.t=setTimeout(()=>{p.hidden=true},2200);
+}
+function lineEffects(key,i){
+  (SFXMAP[key]&&SFXMAP[key][i]||[]).forEach((n,k)=>setTimeout(()=>playSfx(n),k*450));
+  const it=ITEMPOP[key]&&ITEMPOP[key][i]; if(it) showItem(it);
+}
+function preload(key){ (IMGMAP[key]||[]).forEach(n=>{ const im=new Image(); im.src='img/'+n+'.jpg'; }); }
+
+/* ---------- video ---------- */
+let videoPlaying=false, vidQueue=[];
+function bindVideoClose(){ const b=document.getElementById('vclose'); if(b) b.onclick=stopVideo; }
+function playVideos(list){
+  stopSpeech(); S.playing=false; updateCtrl();
+  vidQueue=list.slice(); nextVideo();
+}
+function nextVideo(){
+  const name=vidQueue.shift(); const layer=document.getElementById('vidlayer'), v=document.getElementById('vid');
+  if(!name||!layer){ stopVideo(); return; }
+  layer.hidden=false; videoPlaying=true; if(bgmEl) bgmEl.pause();
+  v.src='video/'+name+'.mp4'; v.currentTime=0; v.muted=false; v.play().catch(()=>{});
+  v.onended=nextVideo;
+}
+function stopVideo(){
+  vidQueue=[]; const layer=document.getElementById('vidlayer'), v=document.getElementById('vid');
+  if(v){ v.pause(); v.removeAttribute('src'); v.load(); } if(layer) layer.hidden=true;
+  videoPlaying=false; updateBGM();
+}
+function sceneVideos(key){ const m=VIDMAP[key]; return m ? Object.keys(m).sort((a,b)=>a-b).map(k=>m[k]) : []; }
+
+/* ---------- scene rendering overrides ---------- */
+lineHTML = function(l,i){
+  const key=skey(); const vid=VIDMAP[key]&&VIDMAP[key][i];
+  const cur=i===S.line?'cur':i<S.line?'done':'';
+  const vbtn = vid ? `<span class="vidbtn" data-vid="${vid}" role="button" title="이 장면 영상 보기">🎬</span>` : '';
+  if(l.r==='N') return `<button class="line narr ${cur}" data-i="${i}"><span class="chip">이야기</span><span class="story">${esc(l.t)}</span><span class="acts2">${vbtn}<span class="say" data-say="${i}" role="button" aria-label="듣기">▶</span></span></button>`;
+  const hid = S.hideRole===l.r ? 'hidden-line'+(S.revealed[i]?' revealed':'') : '';
+  return `<button class="line ${cur} ${l.key?'key':''} ${hid}" data-i="${i}">
+     <span class="chip" style="background:${RC[l.r]}">${ROLE[l.r].ko}<small>${ROLE[l.r].en}</small></span>
+     <span class="en">${blankify(l.t)}<span class="ko">${esc(l.k||'')}</span></span>
+     <span class="acts2">${vbtn}<span class="say" data-say="${i}" role="button" aria-label="듣기">▶</span></span></button>`;
+};
+bindLines = function(L){
+  document.querySelectorAll('#lines .line').forEach(b=>b.onclick=e=>{
+    const i=+b.dataset.i;
+    const v=e.target.closest('[data-vid]');
+    if(v){ stopSpeech(); S.line=i; refreshScene(); playVideos([v.dataset.vid]); return; }
+    if(b.classList.contains('hidden-line') && i===S.line && !S.revealed[i]){ S.revealed[i]=true; refreshScene(); return; }
+    stopSpeech(); setLine(i, !!e.target.closest('[data-say]') || true);
+  });
+};
+refreshScene = function(){
+  const sc=curScene(); if(!sc){ if(S.page==='thorn') renderThorn(); return; }
+  const L=sceneLines(sc);
+  updateStage();
+  $('#lines').innerHTML=L.map((l,i)=>lineHTML(l,i)).join('');
+  bindLines(L); scrollCur(); updateCtrl();
+};
+setLine = function(i,speakIt){
+  const sc=curScene(); const L=sceneLines(sc);
+  S.line=Math.max(0,Math.min(L.length-1,i));
+  refreshScene();
+  lineEffects(skey(), S.line);
+  if(speakIt) return speakLine(L[S.line]);
+};
+renderScene = function(sc){
+  stopVideo();
+  const L=sceneLines(sc);
+  if(S.line>=L.length) S.line=L.length-1;
+  const key=skey(); preload(key);
+  const vids=sceneVideos(key);
+  $('#main').innerHTML = `
+   <section class="stagewrap">
+     <div class="scenecap"><h2>장면 ${sc.id}. ${sc.title}${sc.original?'<span class="badge">원작 장면</span>':''}${sc.ending?`<span class="badge">${DATA.scenes[5].endings[S.ending].name}</span>`:''}</h2>
+       <div class="imgtools"><span class="place">${sc.place}</span>${vids.length?`<button class="iconbtn" id="vidAll">🎬 장면 영상 보기</button>`:''}</div></div>
+     <div class="stage" id="stage">${stageHTML(key)}</div>
+   </section>
+   <section class="sheet ${S.showKo?'':'hide-ko'} ${S.showNarr?'':'hide-narr'}">
+     <div class="sheethead"><b>대본 · Scene ${sc.id}</b>
+       <span style="font-size:.85rem;color:var(--ink-soft)">줄을 누르면 그 줄을 들려줘요 · 🎬 영상</span></div>
+     ${sc.ending?`<div class="endpick">${['A','B'].map(k=>`<button data-end="${k}" aria-pressed="${S.ending===k}"><b>${DATA.scenes[5].endings[k].name}</b>${DATA.scenes[5].endings[k].desc}</button>`).join('')}</div>`:''}
+     <div class="lines" id="lines">${L.map((l,i)=>lineHTML(l,i)).join('')}</div>
+   </section>`;
+  bindLines(L); bindVideoClose();
+  if(sc.ending) document.querySelectorAll('[data-end]').forEach(b=>b.onclick=()=>{stopSpeech();S.ending=b.dataset.end;S.line=0;savePrefs();render()});
+  if(vids.length) $('#vidAll').onclick=()=>playVideos(vids);
+  renderCtrl(true);
+  const n=$('#narr'); if(n) n.value = !S.showNarr?'h':(S.narrTTS?'v':'t');
+  scrollCur();
+};
+playAll = async function(){
+  if(S.playing){ stopSpeech(); updateCtrl(); return; }
+  const sc=curScene(); const L=sceneLines(sc); const key=skey();
+  S.playing=true; updateCtrl();
+  for(let i=S.line;i<L.length;i++){
+    if(!S.playing) break;
+    S.line=i; refreshScene(); lineEffects(key,i);
+    const l=L[i];
+    if(l.r==='N'){ if(S.narrTTS) await sayLine(l,key,i); else await wait(Math.min(5200,1400+l.t.length*55)); }
+    else{
+      await sayLine(l,key,i);
+      if(S.repeat && S.playing){ markRepeat(true); await wait(1500+l.t.length*110/S.rate); markRepeat(false); }
+      else await wait(400);
+    }
+  }
+  S.playing=false; updateCtrl();
+};
+
+/* thorn */
+const _renderThorn = renderThorn;
+renderThorn = function(){ _renderThorn(); bindVideoClose(); };
+playThorn = async function(){
+  const o=DATA.thorn.options[S.thorn], it=o.item;
+  S.fired.thorn=null; updateStage();
+  const q=VOICES.has(`line_thorn_${it}_princess.mp3`)?`voice/line_thorn_${it}_princess.mp3`:null;
+  if(!(q && await playFile(q))) await speak(o.q,'P');
+  await wait(250); playSfx('magic'); showItem(it==='glue'?'gluestick':it);
+  const a=VOICES.has(`line_thorn_${it}_fairy.mp3`)?`voice/line_thorn_${it}_fairy.mp3`:null;
+  if(!(a && await playFile(a))) await speak(o.a,'F');
+  await wait(400); S.fired.thorn='done'; updateStage(); playSfx(it==='scissors'?'snip':it==='eraser'?'erase':'tada'); setTimeout(()=>playSfx('tada'),700);
+};
+
+/* cover & roles */
+renderCover = function(){
+  $('#main').innerHTML=`<section class="page"><div class="cover">
+    <div>
+      <div class="eyebrow">3학년 영어 · Lesson 7 I Have a Pencil · Story Land</div>
+      <h1>종이 봉지 공주의<br><em>왕자 구출 대작전</em></h1>
+      <p>용에게 잡혀간 왕자를 구하러 종이 봉지 옷을 입고 길을 떠난 공주. 교과서 이야기에 원작 『종이 봉지 공주』의 장면과 결말을 더해, 네 명이 한 모둠이 되어 역할극을 연습해요.</p>
+      <div class="goal"><b style="font-family:var(--f-display);font-weight:400">오늘의 핵심 표현</b>
+        <span>A: Do you have scissors?</span><span>B: Yes, I do. / No, I don't.</span><span>I have an eraser.</span></div>
+      <div class="row" style="margin-top:18px"><button class="big" id="startBtn">이야기 시작하기</button><button class="big alt" id="opBtn">🎬 오프닝 영상</button><button class="big alt" id="rolesBtn">역할 정하기</button></div>
+    </div>
+    <div class="stage" id="stage"><video id="covervid" src="video/v_cover.mp4" poster="img/cover.jpg" autoplay muted loop playsinline></video></div>
+  </div></section>`;
+  $('#startBtn').onclick=()=>go('s1'); $('#rolesBtn').onclick=()=>go('roles');
+  $('#opBtn').onclick=()=>{ const v=$('#covervid'); v.loop=false; v.muted=false; v.currentTime=0; if(bgmEl) bgmEl.pause(); videoPlaying=true; v.play().catch(()=>{}); v.onended=()=>{v.muted=true;v.loop=true;v.play().catch(()=>{});videoPlaying=false;updateBGM();}; };
+};
+portrait = function(r){ const f={P:'princess_bag',R:'prince',F:'fairy',D:'dragon'}[r]; return `<img class="portrait" src="img/char_${f}.jpg" alt="${ROLE[r].ko}">`; };
+
+/* render hook → BGM */
+const _render = render;
+render = function(){ _render(); updateBGM(); };
+
+/* header BGM toggle */
+const hb=document.getElementById('bgmBtn');
+if(hb){ hb.setAttribute('aria-pressed',S.bgm); hb.onclick=()=>{ S.bgm=!S.bgm; try{localStorage.setItem('pb-bgm',S.bgm?'1':'0')}catch(e){} hb.setAttribute('aria-pressed',S.bgm); updateBGM(); }; }
+/* browsers block audio until the first click: start BGM then */
+document.addEventListener('pointerdown',function once(){ updateBGM(); document.removeEventListener('pointerdown',once); },{once:true});
+
+render();
+})();
+
+</script>
+</body>
+</html>
