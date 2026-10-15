@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>왕자 구출 대작전 학습지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Andika:wght@400;700&display=swap">
+<style>
+/* Printable A4 worksheet that pairs with index.html (the teacher's stage app). Kraft-paper brown + role colours from the app; role names always printed as text so it still works in black-and-white. */
+:root{
+  --kraft:#c99a62; --kraft-dk:#8a6237; --paper:#fffdf8; --sheet:#f7efe1;
+  --ink:#2a2118; --ink-soft:#6d5c48; --line:#d8c8b0; --trace:#c9bfb2;
+  --flame:#e8643a; --gold:#f2c14e;
+  --c-P:#d9622b; --c-R:#2f6fb8; --c-F:#9a4fb0; --c-D:#2f8a4a; --c-N:#7a6a58;
+  --f-display:"Jua","Gowun Dodum","Noto Sans CJK KR",sans-serif;
+  --f-body:"Gowun Dodum","Malgun Gothic","Noto Sans CJK KR",sans-serif;
+  --f-en:"Andika","Gowun Dodum","Noto Sans CJK KR",sans-serif;
+  color-scheme:light;
+}
+@page{size:A4;margin:11mm 12mm}
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;background:#e9e1d4;color:var(--ink);font-family:var(--f-body);font-size:10.5pt;line-height:1.45}
+img{display:block;max-width:100%}
+.sheet{width:210mm;margin:8mm auto;background:var(--paper);padding:11mm 12mm;box-shadow:0 2px 14px #0002}
+.sheet+.sheet{margin-top:0}
+.printbar{position:sticky;top:0;z-index:5;display:flex;gap:10px;justify-content:center;align-items:center;padding:10px 16px;background:var(--ink);color:var(--sheet);font-size:14px;flex-wrap:wrap}
+.printbar button{font:inherit;font-family:var(--f-display);font-size:16px;padding:6px 18px;border-radius:999px;border:0;background:var(--gold);color:var(--ink);cursor:pointer}
+@media print{
+  body{background:none}
+  .printbar{display:none}
+  .sheet{width:auto;margin:0;padding:0;box-shadow:none}
+  .sheet+.sheet{break-before:page}
+}
+@media (max-width:820px){ .sheet{width:auto;margin:0;padding:16px} }
+
+/* header */
+.top{display:grid;grid-template-columns:1fr 46mm;gap:5mm;align-items:stretch;border-bottom:2.5px solid var(--ink);padding-bottom:4mm}
+.eyebrow{font-size:9pt;color:var(--ink-soft);letter-spacing:.02em}
+h1{font-family:var(--f-display);font-weight:400;font-size:21pt;line-height:1.15;margin:1mm 0 2.5mm}
+h1 em{font-style:normal;color:var(--flame)}
+.who-row{display:flex;gap:4mm;font-size:11pt;align-items:flex-end;flex-wrap:wrap}
+.who-row span{display:inline-flex;align-items:flex-end;gap:1.5mm}
+.who-row i{display:inline-block;border-bottom:1.5px solid var(--ink);height:6mm}
+.top img{width:100%;height:30mm;object-fit:cover;border-radius:3mm;border:1.5px solid var(--ink)}
+.goal{margin-top:3.5mm;display:flex;gap:2mm;flex-wrap:wrap;align-items:center;font-size:9.5pt}
+.goal b{font-family:var(--f-display);font-weight:400;font-size:11pt;margin-right:1mm}
+.goal span{font-family:var(--f-en);font-weight:700;background:var(--sheet);border:1.2px solid var(--kraft-dk);border-radius:99px;padding:.4mm 3mm}
+
+/* section titles */
+.q{margin-top:5.5mm;break-inside:avoid}
+.qt{display:flex;align-items:center;gap:2.5mm;margin:0 0 2.5mm}
+.qt .n{flex:none;width:8mm;height:8mm;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-family:var(--f-display);font-size:13pt}
+.qt h2{font-family:var(--f-display);font-weight:400;font-size:14pt;margin:0;line-height:1.2}
+.qt p{margin:0 0 0 auto;font-size:9pt;color:var(--ink-soft);text-align:right}
+
+/* Q1 vocab */
+.vocab{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.vcard{border:1.5px solid var(--ink);border-radius:3mm;padding:2mm 2.5mm 3mm;background:#fff}
+.vcard img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:2mm}
+.vword{display:flex;justify-content:space-between;align-items:baseline;margin:1.5mm 0 1mm}
+.vword b{font-family:var(--f-en);font-size:13pt}
+.vword span{font-size:9pt;color:var(--ink-soft)}
+/* four-line English guide: top / dashed mid / baseline(red-ish) / bottom */
+.guide{position:relative;height:10.5mm;margin-top:1mm;
+  background:
+    linear-gradient(var(--line),var(--line)) 0 1mm/100% .8px no-repeat,
+    repeating-linear-gradient(90deg,var(--line) 0 1.4mm,transparent 1.4mm 2.6mm) 0 4.2mm/100% .8px no-repeat,
+    linear-gradient(#e5a58c,#e5a58c) 0 7.4mm/100% 1px no-repeat,
+    linear-gradient(var(--line),var(--line)) 0 10.4mm/100% .8px no-repeat;}
+.trace{position:absolute;left:.5mm;top:-.2mm;font-family:var(--f-en);font-size:17.5pt;line-height:1;color:var(--trace);letter-spacing:.03em;white-space:nowrap;padding-top:1.3mm}
+
+.sent{margin-top:3mm;border:1.5px solid var(--ink);border-radius:3mm;padding:1mm 4mm 2mm;background:#fff}
+.sent .guide{height:11.5mm;margin-top:1.5mm}
+.sent p{margin:1.5mm 0 0;font-size:9pt;color:var(--ink-soft)}
+.sent p b{font-family:var(--f-en);color:var(--ink)}
+/* Q2 fairy bag */
+.bag{display:grid;grid-template-columns:1fr 1fr;gap:3mm 5mm}
+.qa{display:grid;grid-template-columns:22mm 1fr;gap:3mm;align-items:center;border:1.2px dashed var(--kraft-dk);border-radius:3mm;padding:2mm 3mm}
+.qimg{position:relative}
+.qimg img{width:22mm;height:22mm;object-fit:cover;border-radius:2mm}
+.mark{position:absolute;right:-2mm;top:-2mm;width:8.5mm;height:8.5mm;border-radius:50%;display:grid;place-items:center;font-family:var(--f-en);font-weight:700;font-size:13pt;color:#fff;border:2px solid #fff}
+.mark.yes{background:var(--c-D)} .mark.no{background:var(--flame)}
+.qlines p{margin:0;font-family:var(--f-en);font-size:11.5pt;line-height:2.15;white-space:nowrap}
+.sp{display:inline-block;font-family:var(--f-body);font-size:8.5pt;color:#fff;border-radius:2mm;padding:0 1.6mm;margin-right:1.5mm;vertical-align:.25em;line-height:1.6}
+.blank{display:inline-block;border-bottom:1.5px solid var(--ink);height:1.1em;vertical-align:-.15em}
+.w4{width:12mm} .w8{width:21mm}
+.bank{margin-top:2.5mm;display:flex;gap:2mm;align-items:center;flex-wrap:wrap;font-size:9pt;color:var(--ink-soft)}
+.bank span{font-family:var(--f-en);font-size:10.5pt;color:var(--ink);border:1.2px solid var(--ink);border-radius:1.5mm;padding:0 2.5mm;background:#fff}
+
+/* role colours (text label always present) */
+.rP .who,.sp.rP{background:var(--c-P)} .rR .who,.sp.rR{background:var(--c-R)}
+.rF .who,.sp.rF{background:var(--c-F)} .rD .who,.sp.rD{background:var(--c-D)}
+
+/* Q3 roles + script */
+.roles{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm}
+.role{border:1.5px solid var(--ink);border-radius:3mm;padding:2mm;background:#fff;display:flex;flex-direction:column;gap:1mm}
+.role img{width:100%;height:22mm;object-fit:cover;object-position:center 20%;border-radius:2mm}
+.role b{font-family:var(--f-display);font-weight:400;font-size:12.5pt}
+.role.rP b{color:var(--c-P)} .role.rR b{color:var(--c-R)} .role.rF b{color:var(--c-F)} .role.rD b{color:var(--c-D)}
+.role small{font-family:var(--f-en);font-size:9pt;color:var(--ink-soft)}
+.role .nm{font-size:9pt;color:var(--ink-soft);border-bottom:1.3px solid var(--ink);padding-top:3mm}
+.steps{margin-top:2.5mm;display:flex;gap:2mm;flex-wrap:wrap;font-size:9.5pt}
+.steps span{display:inline-flex;align-items:center;gap:1.3mm;background:var(--sheet);border-radius:99px;padding:.5mm 3mm .5mm 1.2mm}
+.box{display:inline-block;width:3.6mm;height:3.6mm;border:1.4px solid var(--ink);border-radius:.8mm;background:#fff;flex:none}
+.legend{margin:2mm 0 0;font-size:9pt;color:var(--ink-soft)}
+.legend .star{color:var(--flame)}
+
+.scene{margin-top:3mm;border:1.5px solid var(--ink);border-radius:3mm;overflow:hidden;break-inside:avoid;background:#fff}
+.schead{display:flex;align-items:baseline;gap:2.5mm;padding:1.6mm 3.5mm;background:var(--sheet);border-bottom:1.2px solid var(--ink)}
+.snum{font-family:var(--f-display);font-size:10pt;color:#fff;background:var(--kraft-dk);border-radius:1.5mm;padding:0 2mm}
+.schead h3{font-family:var(--f-display);font-weight:400;font-size:12.5pt;margin:0}
+.place{font-size:9pt;color:var(--ink-soft)}
+.tag{font-size:8.5pt;color:var(--flame);border:1.2px solid var(--flame);border-radius:99px;padding:0 2mm}
+.note{margin-left:auto;font-size:9pt;color:var(--ink-soft)}
+.sbody{display:grid;grid-template-columns:34mm 1fr;gap:3.5mm;padding:2mm 3.5mm}
+.sbody>img{width:34mm;aspect-ratio:4/3;object-fit:cover;border-radius:2mm;border:1px solid var(--line)}
+.lines{display:flex;flex-direction:column;gap:.7mm;min-width:0}
+.ln{display:grid;grid-template-columns:11mm 1fr;gap:2mm;align-items:baseline}
+.ln .who{font-size:8pt;color:#fff;border-radius:1.5mm;text-align:center;line-height:1.55}
+.ln.narr .who{background:transparent;color:var(--c-N);border:1px dashed var(--c-N)}
+.ln .story{font-size:8.5pt;color:var(--ink-soft);line-height:1.4}
+.ln .en{font-family:var(--f-en);font-weight:700;font-size:11.5pt;line-height:1.15}
+.ln .ko{font-size:8.5pt;color:var(--ink-soft);margin-left:2mm}
+.ln .star{color:var(--flame);margin-left:1mm;font-size:9pt}
+.ln.key .en{background:linear-gradient(transparent 62%,#f2c14e66 62%)}
+.ends{display:grid;grid-template-columns:1fr 1fr}
+.ending{padding:2.5mm 3.5mm;display:flex;flex-direction:column;gap:1.5mm}
+.ending+.ending{border-left:1.2px dashed var(--kraft-dk)}
+.ehead{display:flex;justify-content:space-between;align-items:center;gap:2mm}
+.ending img{width:34mm;height:17mm;object-fit:cover;border-radius:2mm;border:1px solid var(--line)}
+.pick{display:flex;align-items:center;gap:2mm;font-family:var(--f-display);font-size:12pt}
+.edesc{margin:0;font-size:9pt;color:var(--ink-soft)}
+
+/* Q4 thorn */
+.tintro{margin:0 0 2.5mm;font-size:10pt}
+.topts{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm}
+.topt{border:1.5px solid var(--ink);border-radius:3mm;padding:2mm;background:#fff;display:flex;flex-direction:column;gap:1.5mm;font-size:9.5pt}
+.topt img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:2mm}
+.topt>span{display:flex;gap:1.5mm;align-items:flex-start}
+.topt .box{margin-top:.6mm}
+.write{margin-top:3mm;display:grid;grid-template-columns:1fr 50mm;gap:4mm}
+.wlines{border:1.5px solid var(--ink);border-radius:3mm;padding:2mm 4mm;background:#fff}
+.wlines p{margin:0;display:grid;grid-template-columns:12mm 1fr;align-items:end;gap:2mm;font-family:var(--f-en);font-size:12pt;height:11mm;border-bottom:1px solid var(--line)}
+.wlines p:last-child{border-bottom:0}
+.wlines .sp{margin:0 0 1.8mm;text-align:center}
+.wlines i{font-style:normal;color:var(--trace)}
+.draw{border:1.5px dashed var(--kraft-dk);border-radius:3mm;display:flex;align-items:flex-start;justify-content:center;padding-top:2mm;font-size:9pt;color:var(--ink-soft);min-height:40mm}
+.hint{margin:2mm 0 0;font-size:9pt;color:var(--ink-soft)}
+.hint b{font-family:var(--f-en);color:var(--ink)}
+
+/* Q5 stars */
+.eval{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.stars{border:1.5px solid var(--ink);border-radius:3mm;padding:2.5mm 4mm;background:#fff}
+.stars div{display:flex;justify-content:space-between;align-items:center;padding:1.5mm 0;border-bottom:1px dashed var(--line);font-size:10.5pt}
+.stars div:last-child{border-bottom:0}
+.stars small{display:block;font-size:8.5pt;color:var(--ink-soft)}
+.stars svg{width:36mm;height:9mm}
+.best{border:1.5px solid var(--ink);border-radius:3mm;padding:2.5mm 4mm;background:var(--sheet);display:flex;flex-direction:column;gap:2.5mm;font-size:10.5pt}
+.best .ul{display:block;border-bottom:1.3px solid var(--ink);height:8mm}
+.foot{margin-top:4mm;text-align:center;font-size:8.5pt;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="printbar">왕자 구출 대작전 학습지 (A4 4쪽) <button onclick="window.print()">인쇄하기</button><span style="opacity:.75">인쇄 창에서 ‘배경 그래픽’을 켜면 색이 함께 나와요.</span></div>
+
+<!-- PAGE 1 -->
+<article class="sheet">
+  <header class="top">
+    <div>
+      <div class="eyebrow">3학년 영어 · Lesson 7 I Have a Pencil · Story Land 역할극 학습지</div>
+      <h1>종이 봉지 공주의 <em>왕자 구출 대작전</em></h1>
+      <div class="who-row"><span>3학년<i style="width:9mm"></i>반</span><span><i style="width:9mm"></i>번</span><span>이름<i style="width:34mm"></i></span><span>모둠<i style="width:12mm"></i></span></div>
+      <div class="goal"><b>오늘의 핵심 표현</b><span>Do you have scissors?</span><span>Yes, I do. / No, I don't.</span><span>I have an eraser.</span></div>
+    </div>
+    <img src="img/ws/cover.jpg" alt="종이 봉지 옷을 입은 공주와 요정, 용">
+  </header>
+
+  <section class="q">
+    <div class="qt"><span class="n">1</span><h2>공주를 도운 학용품, 따라 쓰고 혼자 써 봐요</h2><p>회색 글자를 따라 쓰고,<br>아래 빈 줄에 혼자 써요.</p></div>
+    <div class="vocab"><div class="vcard">
+  <img src="img/ws/scissors.jpg" alt="scissors">
+  <div class="vword"><b>scissors</b><span>가위</span></div>
+  <div class="guide"><span class="trace">scissors</span></div>
+  <div class="guide"></div>
+</div><div class="vcard">
+  <img src="img/ws/gluestick.jpg" alt="a glue stick">
+  <div class="vword"><b>a glue stick</b><span>풀</span></div>
+  <div class="guide"><span class="trace">a glue stick</span></div>
+  <div class="guide"></div>
+</div><div class="vcard">
+  <img src="img/ws/pencil.jpg" alt="a pencil">
+  <div class="vword"><b>a pencil</b><span>연필</span></div>
+  <div class="guide"><span class="trace">a pencil</span></div>
+  <div class="guide"></div>
+</div><div class="vcard">
+  <img src="img/ws/eraser.jpg" alt="an eraser">
+  <div class="vword"><b>an eraser</b><span>지우개</span></div>
+  <div class="guide"><span class="trace">an eraser</span></div>
+  <div class="guide"></div>
+</div></div>
+    <div class="sent">
+      <div class="guide"><span class="trace">Do you have a glue stick?</span></div>
+      <div class="guide"><span class="trace">Yes, I do. I have an eraser.</span></div>
+      <div class="guide"></div>
+      <p>마지막 줄에는 내가 가진 학용품으로 <b>I have ______.</b> 문장을 써요.</p>
+    </div>
+  </section>
+
+  <section class="q">
+    <div class="qt"><span class="n">2</span><h2>요정의 마법 가방! 대화를 완성해요</h2><p><b style="color:var(--c-D)">O</b> 가방에 있어요 · <b style="color:var(--flame)">X</b> 가방에 없어요</p></div>
+    <div class="bag"><div class="qa">
+  <div class="qimg"><img src="img/ws/scissors.jpg" alt=""><span class="mark yes">O</span></div>
+  <div class="qlines">
+    <p><span class="sp rP">공주</span> Do you have <span class="blank w8"></span>?</p>
+    <p><span class="sp rF">요정</span> <span class="blank w4"></span>, I <span class="blank w4"></span>.</p>
+  </div>
+</div><div class="qa">
+  <div class="qimg"><img src="img/ws/gluestick.jpg" alt=""><span class="mark yes">O</span></div>
+  <div class="qlines">
+    <p><span class="sp rP">공주</span> Do you have <span class="blank w8"></span>?</p>
+    <p><span class="sp rF">요정</span> <span class="blank w4"></span>, I <span class="blank w4"></span>.</p>
+  </div>
+</div><div class="qa">
+  <div class="qimg"><img src="img/ws/pencil.jpg" alt=""><span class="mark no">X</span></div>
+  <div class="qlines">
+    <p><span class="sp rP">공주</span> Do you have <span class="blank w8"></span>?</p>
+    <p><span class="sp rF">요정</span> <span class="blank w4"></span>, I <span class="blank w4"></span>.</p>
+  </div>
+</div><div class="qa">
+  <div class="qimg"><img src="img/ws/eraser.jpg" alt=""><span class="mark yes">O</span></div>
+  <div class="qlines">
+    <p><span class="sp rP">공주</span> Do you have <span class="blank w8"></span>?</p>
+    <p><span class="sp rF">요정</span> <span class="blank w4"></span>, I <span class="blank w4"></span>.</p>
+  </div>
+</div></div>
+    <div class="bank">낱말 상자 <span>scissors</span><span>a glue stick</span><span>a pencil</span><span>an eraser</span><span>Yes</span><span>No</span><span>do</span><span>don't</span></div>
+  </section>
+</article>
+
+<!-- PAGE 2 -->
+<article class="sheet">
+  <section class="q" style="margin-top:0">
+    <div class="qt"><span class="n">3</span><h2>역할을 정하고, 대본으로 연습해요</h2><p>모둠 친구 이름을 쓰고<br>내 역할에 ✔ 해요.</p></div>
+    <div class="roles"><div class="role rP"><img src="img/ws/princess_bag.jpg" alt="">
+  <b>공주 <small>Princess</small></b><span class="nm">이름</span></div><div class="role rR"><img src="img/ws/prince.jpg" alt="">
+  <b>왕자 <small>Prince</small></b><span class="nm">이름</span></div><div class="role rF"><img src="img/ws/fairy.jpg" alt="">
+  <b>요정 <small>Fairy</small></b><span class="nm">이름</span></div><div class="role rD"><img src="img/ws/dragon.jpg" alt="">
+  <b>용 <small>Dragon</small></b><span class="nm">이름</span></div></div>
+    <div class="steps"><span><i class="box"></i>① 내 대사에 형광펜</span><span><i class="box"></i>② 혼자 읽기</span><span><i class="box"></i>③ 모둠과 맞춰 읽기</span><span><i class="box"></i>④ 몸짓 넣어 연기하기</span></div>
+    <p class="legend"><span class="star">★</span> 표시와 노란 밑줄은 오늘의 핵심 표현이에요. ‘이야기’ 부분은 선생님이나 대사가 적은 친구가 읽어요.</p>
+  </section>
+  <section class="scene">
+  <header class="schead"><span class="snum">장면 1</span><h3>용이 나타났다!</h3><span class="place">성 정원</span></header>
+  <div class="sbody"><img src="img/ws/s1_2_dragon.jpg" alt=""><div class="lines"><div class="ln narr"><span class="who">이야기</span><span class="story">공주와 왕자, 그리고 요정은 성 정원에서 즐겁게 놀고 있었어요. 그런데 갑자기 하늘이 어두워지더니…</span></div><div class="ln rD"><span class="who">용</span><span class="say"><span class="en">Roar!</span><span class="ko">(으르렁!)</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Look!</span><span class="ko">저기 봐!</span></span></div><div class="ln rR"><span class="who">왕자</span><span class="say"><span class="en">It&#x27;s big!</span><span class="ko">엄청 커!</span></span></div><div class="ln rF"><span class="who">요정</span><span class="say"><span class="en">Oh, no!</span><span class="ko">안 돼!</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">용은 불을 뿜어 성을 몽땅 태우고, 왕자를 붙잡아 날아가 버렸어요. 공주의 예쁜 옷도 다 타 버렸지요.</span></div><div class="ln rR"><span class="who">왕자</span><span class="say"><span class="en">Help me!</span><span class="ko">살려 줘!</span></span></div></div></div>
+</section><section class="scene">
+  <header class="schead"><span class="snum">장면 2</span><h3>종이 봉지 옷</h3><span class="place">불탄 성터</span></header>
+  <div class="sbody"><img src="img/ws/s2_2_scissors.jpg" alt=""><div class="lines"><div class="ln narr"><span class="who">이야기</span><span class="story">타고 남은 성터에서 공주가 찾은 건 커다란 종이 봉지 하나뿐이었어요. 공주는 종이 봉지로 옷을 만들기로 했어요.</span></div><div class="ln rP key"><span class="who">공주</span><span class="say"><span class="en">Do you have scissors?</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">너 가위 있니?</span></span></div><div class="ln rF key"><span class="who">요정</span><span class="say"><span class="en">Yes, I do. Here.</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">응, 있어. 여기 있어.</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Thank you.</span><span class="ko">고마워.</span></span></div><div class="ln rF"><span class="who">요정</span><span class="say"><span class="en">You&#x27;re welcome.</span><span class="ko">천만에.</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">싹둑싹둑! 공주는 종이 봉지 옷을 입고 왕자를 구하러 길을 떠났어요.</span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Let&#x27;s go!</span><span class="ko">가자!</span></span></div></div></div>
+</section><section class="scene">
+  <header class="schead"><span class="snum">장면 3</span><h3>끊어진 다리</h3><span class="place">불탄 숲 속 강가</span></header>
+  <div class="sbody"><img src="img/ws/s3_2_glue.jpg" alt=""><div class="lines"><div class="ln narr"><span class="who">이야기</span><span class="story">용이 지나간 숲은 온통 까맣게 타 있었어요. 강 위의 다리도 뚝 끊어져 있었지요.</span></div><div class="ln rP key"><span class="who">공주</span><span class="say"><span class="en">Oh, no! Do you have a glue stick?</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">이런! 너 풀 있니?</span></span></div><div class="ln rF key"><span class="who">요정</span><span class="say"><span class="en">Yes, I do. I have a glue stick. Here.</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">응, 있어. 나는 풀이 있어. 여기 있어.</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Thank you!</span><span class="ko">고마워!</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">공주는 풀로 덩굴을 이어 붙여 다리를 만들고, 씩씩하게 강을 건넜어요.</span></div></div></div>
+</section>
+</article>
+
+<!-- PAGE 3 -->
+<article class="sheet">
+  <section class="scene">
+  <header class="schead"><span class="snum">장면 4</span><h3>용을 꾀어라!</h3><span class="place">용의 동굴 앞</span><span class="tag">원작 장면</span></header>
+  <div class="sbody"><img src="img/ws/s4_2_fire.jpg" alt=""><div class="lines"><div class="ln narr"><span class="who">이야기</span><span class="story">마침내 용의 동굴! 공주는 커다란 문고리로 문을 쾅쾅 두드렸어요.</span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Knock, knock!</span><span class="ko">똑똑!</span></span></div><div class="ln rD"><span class="who">용</span><span class="say"><span class="en">Go away!</span><span class="ko">저리 가!</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">공주는 꾀를 냈어요. 힘센 용을 마구 칭찬해 주기로요.</span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">You are strong! Fire!</span><span class="ko">넌 정말 힘이 세! 불 뿜어 봐!</span></span></div><div class="ln rD"><span class="who">용</span><span class="say"><span class="en">Whoosh!</span><span class="ko">(화르르!)</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Wow! Again!</span><span class="ko">우아! 한 번 더!</span></span></div><div class="ln rD"><span class="who">용</span><span class="say"><span class="en">Whoosh! … Oh, no fire.</span><span class="ko">(화르르!) … 어, 불이 안 나와.</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Fly!</span><span class="ko">날아 봐!</span></span></div><div class="ln rD"><span class="who">용</span><span class="say"><span class="en">Okay! Fly!</span><span class="ko">좋아! 날아라!</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">용은 눈 깜짝할 사이에 세상을 한 바퀴 돌고 왔어요.</span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Wow! Again!</span><span class="ko">우아! 한 번 더!</span></span></div><div class="ln rD"><span class="who">용</span><span class="say"><span class="en">I&#x27;m tired. Zzz…</span><span class="ko">나 지쳤어. 쿨쿨…</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">용은 너무 지쳐서 그만 쿨쿨 잠들어 버렸어요.</span></div></div></div>
+</section><section class="scene">
+  <header class="schead"><span class="snum">장면 5</span><h3>감옥을 열어라!</h3><span class="place">동굴 속 감옥</span></header>
+  <div class="sbody"><img src="img/ws/s5_3_eraser.jpg" alt=""><div class="lines"><div class="ln narr"><span class="who">이야기</span><span class="story">공주는 잠든 용을 살금살금 넘어 동굴 안으로 들어갔어요. 그때 감옥 안에서 왕자의 목소리가 들렸어요.</span></div><div class="ln rR"><span class="who">왕자</span><span class="say"><span class="en">Open the door!</span><span class="ko">문 좀 열어 줘!</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">공주는 연필로 문고리를 그려 문을 여는 상상을 했어요.</span></div><div class="ln rP key"><span class="who">공주</span><span class="say"><span class="en">Do you have a pencil?</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">너 연필 있니?</span></span></div><div class="ln rF key"><span class="who">요정</span><span class="say"><span class="en">No, I don&#x27;t.</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">아니, 없어.</span></span></div><div class="ln rP key"><span class="who">공주</span><span class="say"><span class="en">Hmm… Do you have an eraser?</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">음… 너 지우개 있니?</span></span></div><div class="ln rF key"><span class="who">요정</span><span class="say"><span class="en">Yes, I do. I have an eraser.</span><span class="star" aria-label="핵심 표현">★</span><span class="ko">응, 있어. 나는 지우개가 있어.</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">쓱싹쓱싹! 공주는 지우개로 감옥 창살을 지웠어요. 왕자가 그 사이로 빠져나왔지요.</span></div></div></div>
+</section>
+  <section class="scene end6">
+  <header class="schead"><span class="snum">장면 6</span><h3>그 다음은?</h3><span class="place">동굴 밖</span><span class="note">우리 모둠이 고른 결말에 ✔ 하세요</span></header>
+  <div class="ends"><div class="ending">
+  <div class="ehead"><label class="pick"><span class="box"></span>A. 교과서 결말</label><img src="img/ws/s6_A_happy.jpg" alt=""></div>
+  <div class="lines"><div class="ln rR"><span class="who">왕자</span><span class="say"><span class="en">Thank you!</span><span class="ko">고마워!</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">You&#x27;re welcome!</span><span class="ko">천만에!</span></span></div><div class="ln rF"><span class="who">요정</span><span class="say"><span class="en">Yay!</span><span class="ko">야호!</span></span></div><div class="ln rD"><span class="who">용</span><span class="say"><span class="en">Zzz…</span><span class="ko">(쿨쿨…)</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">공주와 왕자, 요정은 무사히 집으로 돌아갔어요.</span></div></div>
+</div><div class="ending">
+  <div class="ehead"><label class="pick"><span class="box"></span>B. 원작 결말</label><img src="img/ws/s6_B2_dance.jpg" alt=""></div>
+  <div class="lines"><div class="ln narr"><span class="who">이야기</span><span class="story">그런데 왕자는 고맙다는 말 대신 공주의 옷만 쳐다봤어요.</span></div><div class="ln rR"><span class="who">왕자</span><span class="say"><span class="en">Oh, no! A paper bag? You are messy!</span><span class="ko">으악! 종이 봉지? 너 엉망이야!</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Hmm… You are not nice.</span><span class="ko">흠… 넌 친절하지 않구나.</span></span></div><div class="ln rP"><span class="who">공주</span><span class="say"><span class="en">Bye-bye, Prince!</span><span class="ko">잘 있어, 왕자!</span></span></div><div class="ln narr"><span class="who">이야기</span><span class="story">공주는 왕자를 두고, 햇살 속으로 신나게 춤추며 혼자 떠났답니다.</span></div></div>
+</div></div>
+</section>
+</article>
+
+<!-- PAGE 4 -->
+<article class="sheet">
+  <section class="q" style="margin-top:0">
+    <div class="qt"><span class="n">4</span><h2>새 장면: 가시덤불 — 우리 모둠 장면 만들기</h2><p>장면 3 대신 넣어 연기해요.</p></div>
+    <p class="tintro">끊어진 다리 대신, 길을 꽉 막은 가시덤불이 나타났어요! 공주는 어떤 학용품으로 빠져나갈까요?</p>
+    <div class="topts"><label class="topt"><img src="img/ws/thorn_scissors.jpg" alt="">
+  <span><span class="box"></span>1. 가위로 가시덤불을 싹둑 잘라요.</span></label><label class="topt"><img src="img/ws/thorn_pencil.jpg" alt="">
+  <span><span class="box"></span>2. 연필로 가시덤불에 큰 길을 그려요.</span></label><label class="topt"><img src="img/ws/thorn_eraser.jpg" alt="">
+  <span><span class="box"></span>3. 지우개로 가시덤불을 쓱싹 지워요.</span></label></div>
+    <div class="write">
+      <div class="wlines">
+        <p><span class="sp rP">공주</span><span>Oh, no! Do you have <span class="blank" style="width:42mm"></span> ?</span></p>
+        <p><span class="sp rF">요정</span><span><span class="blank" style="width:14mm"></span>, I <span class="blank" style="width:14mm"></span>. I have <span class="blank" style="width:34mm"></span>.</span></p>
+        <p><span class="sp rP">공주</span><span><span class="blank" style="width:30mm"></span> <i>(고마워!)</i></span></p>
+        <p><span class="sp rF">요정</span><span><span class="blank" style="width:42mm"></span> <i>(천만에!)</i></span></p>
+        <p><span class="sp" style="background:var(--c-N)">이야기</span><span style="font-family:var(--f-body);font-size:10pt;color:var(--ink-soft)">공주는 <span class="blank" style="width:28mm"></span>(으)로 가시덤불을 <span class="blank" style="width:30mm"></span>.</span></p>
+      </div>
+      <div class="draw">우리 모둠만의 방법을 그려요</div>
+    </div>
+    <p class="hint">도움 표현 <b>Thank you!</b> · <b>You're welcome.</b> · <b>Here.</b> · <b>Let's go!</b> &nbsp;— 다른 학용품을 골라도 좋아요.</p>
+  </section>
+
+  <section class="q">
+    <div class="qt"><span class="n">5</span><h2>발표하고, 우리 모둠 별을 색칠해요</h2><p>발표가 끝나면 큰 박수!</p></div>
+    <div class="eval">
+      <div class="stars">
+        <div><span>영어 표현<small>대사를 또박또박 말했어요</small></span><svg viewBox="0 0 120 30" aria-hidden="true"><path transform="translate(6 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/><path transform="translate(46 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/><path transform="translate(86 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/></svg></div><div><span>자신감<small>큰 목소리로 연기했어요</small></span><svg viewBox="0 0 120 30" aria-hidden="true"><path transform="translate(6 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/><path transform="translate(46 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/><path transform="translate(86 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/></svg></div><div><span>협동심<small>친구와 순서를 잘 맞췄어요</small></span><svg viewBox="0 0 120 30" aria-hidden="true"><path transform="translate(6 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/><path transform="translate(46 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/><path transform="translate(86 2)" d="M13 0l3.8 8.2 9 1-6.7 6.1 1.9 8.8L13 19.6 5 24.1l1.9-8.8L.2 9.2l9-1z" fill="none" stroke="#2a2118" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="best">
+        <b style="font-family:var(--f-display);font-weight:400;font-size:12pt">가장 실감 나게 연기한 친구</b>
+        <span>이름 <span class="ul"></span></span>
+        <span>칭찬 한마디 <span class="ul"></span><span class="ul"></span></span>
+      </div>
+    </div>
+  </section>
+  <p class="foot">원작: 로버트 먼치 글 · 마이클 마첸코 그림 『종이 봉지 공주』 — 수업용으로 다시 쓴 대본이에요.</p>
+</article>
+</body>
+</html>
